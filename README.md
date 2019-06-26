@@ -1,5 +1,5 @@
 <h2>SwiftWebUI
-  <img src="https://zeezide.com/img/TinkerIcon128.svg"
+  <img src="https://zeezide.com/img/TinkerIcon.svg"
        align="right" width="128" height="128" />
 </h2>
 
