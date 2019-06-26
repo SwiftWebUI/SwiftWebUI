@@ -1,0 +1,5 @@
+The source code is distributed under the terms of the Bad Code License.
+You are forbidden from distributing software containing the code to end
+users, because it is bad.
+
+Questions? wrong@alwaysrightinstitute.com.
