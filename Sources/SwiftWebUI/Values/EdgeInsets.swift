@@ -6,7 +6,9 @@
 //  Copyright © 2019 Helge Heß. All rights reserved.
 //
 
-public enum Edge {
+public enum Edge: Int8, CaseIterable, Hashable {
+  
+  case top, leading, bottom, trailing
  
   public struct Set: OptionSet, Hashable {
     public let rawValue : Int
