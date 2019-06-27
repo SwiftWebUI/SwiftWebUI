@@ -33,11 +33,19 @@ public extension Image {
     //
     // We could also use an extra Emoji thing.
     
-    var suiClasses : Set<String> = Set(
-      systemName.split(separator: ".")
-      .map(String.init)
-      .map { sfName in return sfNameToSUI[sfName] ?? sfName }
+    let sfClasses : Set<String> = Set(
+      systemName.split(separator: ".").map(String.init)
     )
+    
+    var suiClasses : Set<String> = Set(
+      sfClasses.map { sfName in return sfNameToSUI[sfName] ?? sfName }
+    )
+
+    if suiClasses.contains("cart") {
+      suiClasses.insert("shopping")
+      // no minus ...
+    }
+    
 
     // circle.fill => circle
     // circle      => circle outline
