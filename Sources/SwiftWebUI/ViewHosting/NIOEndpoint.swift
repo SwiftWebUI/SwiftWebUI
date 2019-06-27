@@ -37,13 +37,20 @@ public final class NIOEndpoint {
   
   
   // MARK: - RootView
-  
-  var view : AnyView?
+
+  var sessionViewBuilder : (() -> AnyView)?
   
   public func use<T: View>(_ view: T) {
     // we could support different views per URL (kinda like Routing)
-    assert(self.view == nil, "currently only supporting a single view :-)")
-    self.view = AnyView(view)
+    assert(self.sessionViewBuilder == nil,
+           "currently only supporting a single view :-)")
+    self.sessionViewBuilder = { AnyView(view) }
+  }
+  public func use<T: View>(_ viewBuilder: @escaping () -> T) {
+    // we could support different views per URL (kinda like Routing)
+    assert(self.sessionViewBuilder == nil,
+           "currently only supporting a single view :-)")
+    self.sessionViewBuilder = { AnyView(viewBuilder()) }
   }
 
   
@@ -142,12 +149,13 @@ public final class NIOEndpoint {
   // MARK: - Page and Session Setup
   
   private func sendInitialPage(to response: ServerResponse) throws {
-    guard let view = view else {
+    guard let sessionViewBuilder = sessionViewBuilder else {
       throw SwiftUIError.missingView
     }
     
     let sessionID = NIOHostingSession.createSessionID()
-    let session   = NIOHostingSession(sessionID: sessionID, view: view)
+    let session   = NIOHostingSession(sessionID: sessionID,
+                                      view: sessionViewBuilder())
     
     try session.sendInitialPage(to: response)
     sessions[sessionID] = session // only save when this worked

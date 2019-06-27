@@ -18,9 +18,9 @@ final class NIOHostingSession {
   var tree        : HTMLTreeNode
   let rootView    : AnyView
 
-  init(sessionID: String, view: AnyView) {
+  init<RootView: View>(sessionID: String, view: RootView) {
     self.sessionID = sessionID
-    self.rootView  = view
+    self.rootView  = AnyView(view)
     
     let treeContext = TreeStateContext()
 
