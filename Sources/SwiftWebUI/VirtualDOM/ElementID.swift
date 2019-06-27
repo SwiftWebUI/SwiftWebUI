@@ -148,6 +148,14 @@ extension ElementID { // WebID
     return id.webID
   }
 
+  static func makeWebID<T: CaseIterable & Identifiable>(for id: T) -> String {
+    return "\(id)" // enum case
+  }
+
+  static func makeWebID<T: Identifiable>(for value: T) -> String {
+    return makeWebID(for: value.id)
+  }
+  
   static func makeWebID(for id: AnyHashable) -> String {
     if let webID = elementIDComponentToWebID[id] { return webID }
     let sv = xIDSequence.add(1)
@@ -155,9 +163,11 @@ extension ElementID { // WebID
     elementIDComponentToWebID[id] = webID
     return webID
   }
+  
   static func makeWebID<T: Hashable>(for id: T) -> String {
     // FIXME: This is sometimes picked instead of makeWebID<Int>?! Which is why
     //        we have this cast in here. Hm.
+    // Same for CaseIterable.
     if let webID = (id as? WebRepresentableIdentifier)?.webID {
       return webID
     }
