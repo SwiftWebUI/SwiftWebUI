@@ -47,6 +47,10 @@ html, body {
   overflow-y: scroll;
 }
 
+.swiftui-click-container {
+  cursor: pointer;
+}
+
 .swiftui-list {
   overflow-y: auto;
   height:     100%;
