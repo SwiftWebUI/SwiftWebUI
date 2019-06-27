@@ -15,7 +15,7 @@ public struct Button<Label: View>: View {
   let action : () -> Void
   let label  : Label
   
-  public init(_ action: @escaping () -> Void, label: () -> Label) {
+  public init(_ action: @escaping () -> Void, @ViewBuilder label: () -> Label) {
     self.action = action
     self.label  = label()
   }
