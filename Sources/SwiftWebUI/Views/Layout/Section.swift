@@ -11,7 +11,7 @@ public struct Section<Header: View, Content: View, Footer: View>: View {
   let header  : Header?
   let content : Content
   let footer  : Footer?
-  
+    
   public init(header: Header, footer: Footer,
               @ViewBuilder content: () -> Content)
   {
@@ -30,7 +30,9 @@ public struct Section<Header: View, Content: View, Footer: View>: View {
       else {}
       
       HTMLContainer(classes: ["ui", "attached", "segment" ]) {
-        content
+        VStack(alignment: .leading) {
+          content
+        }
       }
       
       if footer != nil {
