@@ -12,6 +12,9 @@ public enum Color : Hashable, CustomStringConvertible, CSSStyleValue {
 
   case rgb  (_ value: UInt32)
   case named(_ value: String)
+  case clear
+  case primary
+  case secondary
   
   public init(_ value: UInt32) {
     self = .rgb(value)
@@ -30,8 +33,11 @@ public enum Color : Hashable, CustomStringConvertible, CSSStyleValue {
              + (red  .count < 2 ? "0" + red : red)
              + (green.count < 2 ? "0" + red : red)
              + (blue .count < 2 ? "0" + red : red)
-      case .named(let name):
-        return name
+      
+      case .named(let name): return name
+      case .clear:           return "rgba(0,0,0,0.0)"
+      case .primary:         return "black"
+      case .secondary:       return "darkgray"
     }
   }
   
