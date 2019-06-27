@@ -44,21 +44,21 @@ public struct Section<Header: View, Content: View, Footer: View>: View {
 }
 
 public extension Section where Header == EmptyView {
-  init(footer: Footer, content: () -> Content) {
+  init(footer: Footer, @ViewBuilder content: () -> Content) {
     self.header = nil
     self.content = content()
     self.footer  = footer
   }
 }
 public extension Section where Footer == EmptyView {
-  init(header: Header, content: () -> Content) {
+  init(header: Header, @ViewBuilder content: () -> Content) {
     self.header  = header
     self.content = content()
     self.footer  = nil
   }
 }
 public extension Section where Header == EmptyView, Footer == EmptyView {
-  init(content: () -> Content) {
+  init(@ViewBuilder content: () -> Content) {
     self.header  = nil
     self.content = content()
     self.footer  = nil
