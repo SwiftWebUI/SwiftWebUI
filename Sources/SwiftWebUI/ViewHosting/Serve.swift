@@ -34,14 +34,16 @@ public enum SwiftWebUI {
   {
     let endpoint = NIOEndpoint.shared
     
-    let fonts = "themes/default/assets/fonts"
+    let fonts  = "themes/default/assets/fonts"
+    let images = "themes/default/assets/images"
     let resources = [
       "semantic.min.css"             : SemanticUI.data_semantic_min_css,
       "components/icon.min.css"      : SemanticUI.data_icon_min_css,
       "\(fonts)/icons.woff2"         : SemanticUI.data_icons_woff2,
       "\(fonts)/icons.svg"           : SemanticUI.data_icons_svg,
       "\(fonts)/outline-icons.woff2" : SemanticUI.data_outline_icons_woff2,
-      "\(fonts)/outline-icons.svg"   : SemanticUI.data_outline_icons_svg
+      "\(fonts)/outline-icons.svg"   : SemanticUI.data_outline_icons_svg,
+      "\(images)/flags.png"          : SemanticUI.data_flags_png
     ]
     for ( name, value ) in resources {
       endpoint.expose(value, as: name)
