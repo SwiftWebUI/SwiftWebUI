@@ -13,12 +13,14 @@ public struct Form<Content: View> : View {
   let content : VStack<Content>
   
   public init(@ViewBuilder content: () -> Content) {
-    self.content = VStack(content: content)
+    self.content =
+      VStack(alignment: .leading, content: content)
   }
   
   public var body: some View {
     return HTMLContainer("form", classes: [ "swiftui-form", "ui", "form" ]) {
       content
+        .relativeWidth(1)
     }
   }
   
