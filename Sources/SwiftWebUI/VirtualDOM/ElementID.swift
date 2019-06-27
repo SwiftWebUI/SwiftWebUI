@@ -122,7 +122,12 @@ extension String: WebRepresentableIdentifier {
 }
 
 extension AnyHashable: WebRepresentableIdentifier {
-  var webID: String { return ElementID.makeWebID(for: base) }
+  var webID: String {
+    // TBD: make this the other way around ;-) Only if makeWebID can't find
+    //      anything, we should check the map.
+    if let webID = elementIDComponentToWebID[self] { return webID }
+    return ElementID.makeWebID(for: base)
+  }
 }
 
 
@@ -148,6 +153,7 @@ extension ElementID { // WebID
     return id.webID
   }
 
+  #if false // FIXME: this breaks stuff
   static func makeWebID<T: CaseIterable & Identifiable>(for id: T) -> String {
     return "\(id)" // enum case
   }
@@ -155,12 +161,15 @@ extension ElementID { // WebID
   static func makeWebID<T: Identifiable>(for value: T) -> String {
     return makeWebID(for: value.id)
   }
+  #endif
   
   static func makeWebID(for id: AnyHashable) -> String {
     if let webID = elementIDComponentToWebID[id] { return webID }
     let sv = xIDSequence.add(1)
     let webID = xIDPrefix + String(sv, radix: 16, uppercase: true)
     elementIDComponentToWebID[id] = webID
+    print("WARN: registering custom webID for non-standard ID:",
+          id, "=>", webID)
     return webID
   }
   
@@ -172,17 +181,18 @@ extension ElementID { // WebID
       return webID
     }
 
-    print("WARN: generating custom webID for non-standard ID:", id)
-    return makeWebID(for: AnyHashable(id))
+    let s = makeWebID(for: AnyHashable(id))
+    return s
   }
-
+  
   @inline(__always)
   static func makeWebID(for id: Any) -> String {
     if let webID = (id as? WebRepresentableIdentifier)?.webID {
       return webID
     }
-    // TBD: We could also keep a string map here to preserve the type!
-    return String(describing: id).webID
+    let s = String(describing: id).webID
+    print("WARN: generating custom webID for Any:", id, "=>", s)
+    return s
   }
 
   func isContainedInWebID(_ webID: [ String ]) -> Bool {

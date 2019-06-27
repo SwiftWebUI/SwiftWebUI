@@ -213,7 +213,7 @@ class HTMLTreeBuilder {
       
       // Hmm, this doesn't pick the right makeWebID<Int> for 1...3 sequences,
       // but rather picks the "Hashable" version. Why?
-      let webID = ElementID.makeWebID(for: item)
+      let webID = ElementID.makeWebID(for: item.id)
       
       let itemView = view.content(item)
       let itemTree = buildTree(for: itemView, in: context)
