@@ -42,13 +42,17 @@ struct HTMLClickContainerNode: HTMLWrappingActionNode {
                       attribute: clickHandler,
                       value: isEnabled ? onClickValue : "")
       )
+      changeset.append(.init(elementID.webID, toggleClass: "active",
+                             isEnabled: isEnabled))
     }
     
     content.generateChanges(from: oldNode.content, into: &changeset,
                             in: context)
   }
   func generateHTML(into html: inout String) {
-    html += "<div class=\"swiftui-click-container\""
+    html += "<div class=\"swiftui-click-container"
+    if isEnabled { html += " active" }
+    html += "\""
     html.appendAttribute("id", elementID.webID)
     if isEnabled { html.appendAttribute(clickHandler, onClickValue) }
     html += ">"

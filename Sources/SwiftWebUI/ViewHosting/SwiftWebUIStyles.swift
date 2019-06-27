@@ -47,7 +47,7 @@ html, body {
   overflow-y: scroll;
 }
 
-.swiftui-click-container {
+.swiftui-click-container.active {
   cursor: pointer;
 }
 
