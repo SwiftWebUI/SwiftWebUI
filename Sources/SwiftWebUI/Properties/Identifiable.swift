@@ -22,6 +22,10 @@ public extension Identifiable where Self == Self.IdentifiedValue {
   
 }
 
+public extension Identifiable where Self: CaseIterable {
+  var id : Self { return self }
+}
+
 public extension Collection {
 
   func identified<ID>(by getID: KeyPath<Self.Element, ID>)
@@ -31,20 +35,16 @@ public extension Collection {
   }
 }
 
-public extension Identifiable where Self : AnyObject {
+public extension Identifiable where Self: AnyObject {
   // Note: This is not so great for Web content because OIDs are not webIDs.
-  @inlinable
   var id: ObjectIdentifier { return ObjectIdentifier(self) }
 }
 
-extension Int : Identifiable {
-  public typealias IdentifiedValue = Int
+extension Int: Identifiable {
   public var id: Int { return self }
 }
 
 public struct IdentifierValuePair<ID: Hashable, Value>: Identifiable {
-  
-  public typealias IdentifiedValue = Value
   
   public let id    : ID
   public let value : Value
@@ -54,5 +54,5 @@ public struct IdentifierValuePair<ID: Hashable, Value>: Identifiable {
     self.value = value
   }
   
-  public var identifiedValue: Self.IdentifiedValue { return value }
+  public var identifiedValue: Value { return value }
 }
