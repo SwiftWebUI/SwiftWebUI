@@ -270,17 +270,17 @@ public final class NIOEndpoint {
       .serverChannelOption(reuseAddrOpt, value: 1)
       
       .childChannelInitializer { channel in
-          return channel.pipeline.configureHTTPServerPipeline().flatMap {
-            _ in
-            channel.pipeline.addHandler(HTTPHandler(endpoint: self))
-          }
+          channel.pipeline.configureHTTPServerPipeline(withErrorHandling: true)
+            .flatMap {
+              channel.pipeline.addHandler(HTTPHandler(endpoint: self))
+            }
       }
       
-      .childChannelOption(ChannelOptions.socket(
-        IPPROTO_TCP, TCP_NODELAY), value: 1)
       .childChannelOption(reuseAddrOpt, value: 1)
       .childChannelOption(ChannelOptions.maxMessagesPerRead,
                           value: 1)
+      .childChannelOption(ChannelOptions.allowRemoteHalfClosure,
+                          value: true)
     return bootstrap
   }
 
