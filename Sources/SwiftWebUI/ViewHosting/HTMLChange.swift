@@ -8,7 +8,7 @@
 
 public enum HTMLChange {
   
-  init(_ webID: String, toggle clazz: String, isEnabled: Bool) {
+  init(_ webID: String, toggleClass clazz: String, isEnabled: Bool) {
     if isEnabled { self = .addClass   (webID: webID, class: clazz) }
     else         { self = .removeClass(webID: webID, class: clazz) }
   }

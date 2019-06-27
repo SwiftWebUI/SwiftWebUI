@@ -74,7 +74,7 @@ struct SUIListItemNode<Selection: SelectionManager>: HTMLWrappingNode {
     
     if oldNode.isSelected != isSelected {
       changeset.append(
-        .init(elementID.webID, toggle: "active", isEnabled: isSelected)
+        .init(elementID.webID, toggleClass: "active", isEnabled: isSelected)
       )
     }
 

@@ -28,12 +28,12 @@ struct SUIButtonNode: HTMLWrappingActionNode {
     
     if oldNode.isEnabled != isEnabled {
       changeset.append(
-        .init(elementID.webID, toggle: "disabled", isEnabled: !isEnabled)
+        .init(elementID.webID, toggleClass: "disabled", isEnabled: !isEnabled)
       )
     }
     if oldNode.isActive != isActive {
       changeset.append(
-        .init(elementID.webID, toggle: "active", isEnabled: isActive)
+        .init(elementID.webID, toggleClass: "active", isEnabled: isActive)
       )
     }
 
