@@ -11,13 +11,15 @@ import NIOHTTP1
 
 open class ServerResponse {
   
+  private let request        : HTTPRequestHead
   public  var status         = HTTPResponseStatus.ok
   public  var headers        = HTTPHeaders()
   public  let channel        : Channel
   private var didWriteHeader = false
   private var didEnd         = false
   
-  public init(channel: Channel) {
+  public init(request: HTTPRequestHead, channel: Channel) {
+    self.request = request
     self.channel = channel
   }
 
@@ -43,8 +45,10 @@ open class ServerResponse {
     guard !didWriteHeader else { return } // done already
     didWriteHeader = true
     
-    let head = HTTPResponseHead(version: .init(major:1, minor:1),
+    var head = HTTPResponseHead(version: .init(major:1, minor:1),
                                 status: status, headers: headers)
+    head.headers.add(name: "Connection", value: "close") // Yikes ;-)
+
     let part = HTTPServerResponsePart.head(head)
     _ = channel.writeAndFlush(part).recover(handleError)
   }

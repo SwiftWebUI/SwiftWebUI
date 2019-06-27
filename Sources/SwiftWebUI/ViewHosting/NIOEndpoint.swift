@@ -298,7 +298,8 @@ public final class NIOEndpoint {
       
       switch reqPart {
         case .head(let header):
-          let res = ServerResponse(channel: context.channel)
+          let res = ServerResponse(request: header,
+                                   channel: context.channel)
           endpoint.handle(request: header, response: res)
 
         // ignore incoming content to keep it micro :-)
