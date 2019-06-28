@@ -682,7 +682,7 @@ struct CompoundNode: HTMLTreeNode {
                            with elementID: ElementID) -> HTMLTreeNode
   {
     switch children.count {
-      case 0:  return EmptyNode.shared
+      case 0:  return EmptyNode(elementID: elementID)
       case 1:  return children[0]
       // TBD: We could return tuple based children for some sizes
       default: return CompoundNode(elementID: elementID, children: children)

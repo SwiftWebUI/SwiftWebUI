@@ -12,8 +12,16 @@ public struct EmptyView : View {
   
 }
 
+extension HTMLTreeBuilder {
+  func buildTree(for view: EmptyView, in context: TreeStateContext)
+       -> HTMLTreeNode
+  {
+    return EmptyNode(elementID: context.currentElementID)
+  }
+}
+
 extension EmptyView: TreeBuildingView {
   func buildTree(in context: TreeStateContext) -> HTMLTreeNode {
-    return EmptyNode.shared
+    return context.currentBuilder.buildTree(for: self, in: context)
   }
 }

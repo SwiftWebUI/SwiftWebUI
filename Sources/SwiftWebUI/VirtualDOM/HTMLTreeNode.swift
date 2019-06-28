@@ -106,12 +106,12 @@ extension HTMLTreeNode {
     if let oldNode = oldNode as? Self { return oldNode }
 
     #if DEBUG
-    if oldNode.elementID != elementID {
-      print("WARN: ID of node changed:",
-            "\n  OLD:", oldNode.elementID.webID, type(of: oldNode),
-            "\n  NEW:", elementID.webID, type(of: self))
-      assert(oldNode.elementID == elementID)
-    }
+      if oldNode.elementID != elementID {
+        print("WARN: ID of node changed:",
+              "\n  OLD:", oldNode.elementID.webID, type(of: oldNode),
+              "\n  NEW:", elementID.webID, type(of: self))
+        assert(oldNode.elementID == elementID)
+      }
     #endif
 
     print("WARN: type of node changed:", elementID.webID,

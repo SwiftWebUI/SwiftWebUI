@@ -18,6 +18,6 @@ extension View where Body == Never {
 
 extension Never: TreeBuildingView {
   func buildTree(in context: TreeStateContext) -> HTMLTreeNode {
-    return EmptyNode.shared
+    return EmptyNode(elementID: context.currentElementID)
   }
 }
