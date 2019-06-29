@@ -9,7 +9,11 @@
 public enum HorizontalAlignment : Equatable {
   
   case leading, center, trailing
-  
+
+  /// Hack: Tell a flexbox to stretch its contents.
+  ///
+  /// This should be automatic depending on the contents of the vstack.
+  case stretch
 }
 
 extension HorizontalAlignment {
@@ -19,6 +23,7 @@ extension HorizontalAlignment {
       case .leading  : return "flex-start"
       case .center   : return "center"
       case .trailing : return "flex-end"
+      case .stretch  : return "stretch"
     }
   }
 }

@@ -14,7 +14,7 @@ public struct Form<Content: View> : View {
   
   public init(@ViewBuilder content: () -> Content) {
     self.content =
-      VStack(alignment: .leading, content: content)
+      VStack(alignment: .stretch, content: content)
   }
   
   public var body: some View {

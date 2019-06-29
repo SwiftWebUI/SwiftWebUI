@@ -45,6 +45,13 @@ public enum Alignment : Equatable {
       case ( .leading,  .lastTextBaseline  ): self = .bottomLeading
       case ( .trailing, .lastTextBaseline  ): self = .bottomTrailing
       case ( .center,   .lastTextBaseline  ): self = .bottom
+      
+      // Web hack
+      case ( .stretch,  .center ): self = .center
+      case ( .stretch,  .top    ): self = .top
+      case ( .stretch,  .bottom ): self = .bottom
+      case ( .stretch,  .firstTextBaseline ): self = .top
+      case ( .stretch,  .lastTextBaseline  ): self = .bottom
     }
   }
 }

@@ -168,8 +168,10 @@ extension ElementID { // WebID
     let sv = xIDSequence.add(1)
     let webID = xIDPrefix + String(sv, radix: 16, uppercase: true)
     elementIDComponentToWebID[id] = webID
-    print("WARN: registering custom webID for non-standard ID:",
-          id, "=>", webID)
+    #if DEBUG && false
+      print("WARN: registering custom webID for non-standard ID:",
+            id, "=>", webID)
+    #endif
     return webID
   }
   
