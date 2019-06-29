@@ -15,7 +15,7 @@ extension Image {
   public static func unsplash(scope : UnsplashSource.Scope = .none,
                               time  : UnsplashSource.Time  = .all,
                               size  : UXSize = UXSize(width: 640, height: 480),
-                              _ terms : String...) -> Image
+                              terms : [ String ]) -> Image
   {
     return Image(UnsplashSource(
       scope: scope, time: time,
@@ -23,5 +23,12 @@ extension Image {
       UnsplashSource.Size(width: Int(size.width), height: Int(size.height)),
       terms: terms)
     )
+  }
+  public static func unsplash(scope : UnsplashSource.Scope = .none,
+                              time  : UnsplashSource.Time  = .all,
+                              size  : UXSize = UXSize(width: 640, height: 480),
+                              _ terms : String...) -> Image
+  {
+    return unsplash(scope: scope, time: time, size: size, terms: terms)
   }
 }
