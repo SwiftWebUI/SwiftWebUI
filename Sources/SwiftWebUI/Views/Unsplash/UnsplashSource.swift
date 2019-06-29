@@ -47,12 +47,12 @@ public struct UnsplashSource {
     var pathComponent: String { return "\(width)x\(height)" }
   }
   
-  var scope : Scope
-  var time  : Time
-  var size  : Size?
-  var terms : [ String ]
+  public var scope : Scope
+  public var time  : Time
+  public var size  : Size?
+  public var terms : [ String ]
   
-  var url: URL {
+  public var url: URL {
     var pathComponents = scope.pathComponents + [ time.pathComponent ]
     if let size = size { pathComponents.append(size.pathComponent) }
     
