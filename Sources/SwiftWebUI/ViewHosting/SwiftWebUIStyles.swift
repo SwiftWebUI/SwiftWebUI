@@ -171,5 +171,16 @@ div.swiftui-radio {
 div.swiftui-radio input {
   margin-right: 0.4rem;
 }
-"""
 
+div.swiftui-picker {
+  display:        flex;
+  flex-direction: row;
+  align-items:    center;
+}
+div.swiftui-picker > select {
+  margin-right: 0.4rem;
+}
+div.swiftui-picker > label {
+  flex-grow: 10;
+}
+"""

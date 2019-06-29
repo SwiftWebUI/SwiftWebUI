@@ -73,8 +73,15 @@ extension HTMLTreeBuilder {
       return .replaceAndReturn(newNode: optionNode)
     }
 
-    return HTMLSelectNode(elementID: baseID,
-                          isEnabled: isEnabled, content: enrichedChildTree)
+    context.appendElementIDComponent("|")
+    let label = configuration.label.buildTree(in: context)
+    context.deleteLastElementIDComponent()
+
+    let selectNode = HTMLSelectNode(elementID : baseID,
+                                    isEnabled : isEnabled,
+                                    label     : label,
+                                    content   : enrichedChildTree)
+    return selectNode
   }
 }
 extension HTMLPopUpPickerStyle.Body: TreeBuildingView {

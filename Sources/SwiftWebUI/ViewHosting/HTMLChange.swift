@@ -12,7 +12,7 @@ public enum HTMLChange {
     if isEnabled { self = .addClass   (webID: webID, class: clazz) }
     else         { self = .removeClass(webID: webID, class: clazz) }
   }
-  
+
   case replaceElementWithHTML        (webID: String, html: String)
   case replaceElementContentsWithHTML(webID: String, html: String)
   case deleteElement                 (webID: String)

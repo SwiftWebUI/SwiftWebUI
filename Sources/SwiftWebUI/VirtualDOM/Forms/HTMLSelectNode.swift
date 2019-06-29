@@ -10,10 +10,12 @@ struct HTMLSelectNode: HTMLWrappingNode {
   
   let elementID  : ElementID
   let isEnabled  : Bool
+  let label      : HTMLTreeNode
   let content    : HTMLTreeNode
-  
+
   func nodeByApplyingNewContent(_ newContent: HTMLTreeNode) -> Self {
     return HTMLSelectNode(elementID: elementID, isEnabled: isEnabled,
+                          label: label,
                           content: newContent)
   }
   
@@ -24,33 +26,49 @@ struct HTMLSelectNode: HTMLWrappingNode {
     guard let oldNode = sameType(oldNode, &changeset) else { return }
     
     if oldNode.isEnabled != isEnabled {
-      if isEnabled {
+      if !isEnabled {
         changeset.append(
-          .setAttribute(webID: elementID.webID, attribute: "disabled",
+          .setAttribute(webID: labelWebID, attribute: "disabled",
                         value: "disabled")
         )
       }
       else {
         changeset.append(
-          .removeAttribute(webID: elementID.webID, attribute: "disabled")
+          .removeAttribute(webID: labelWebID, attribute: "disabled")
         )
       }
     }
     
+    label.generateChanges(from: oldNode.label, into: &changeset, in: context)
+    
     content.generateChanges(from: oldNode.content, into: &changeset,
                             in: context)
   }
+  
+  private var selectWebID : String { return elementID.webID + ".X" }
+  private var labelWebID  : String { return elementID.webID + "._" }
 
   func generateHTML(into html: inout String) {
     // TODO: this wants the 'checked' class
+    let webID = elementID.webID
+    html += "<div class=\"swiftui-picker\""
+    html.appendAttribute("id", webID)
+    html += ">"
+    defer { html += "</div>" }
     html += "<select"
-    html.appendAttribute("id", elementID.webID)
+    html.appendAttribute("id", selectWebID)
     html.appendAttribute("onchange", "SwiftUI.selectChanged(this, event);")
     if !isEnabled { html.appendAttribute("disabled", "disabled") }
     html += ">"
-    defer { html += "</select>" }
-    
     content.generateHTML(into: &html)
+    html += "</select>"
+
+    html += "<label"
+    html.appendAttribute("id",  labelWebID)
+    html.appendAttribute("for", selectWebID)
+    html += ">"
+    label.generateHTML(into: &html)
+    html += "</label>"
   }
 
   // MARK: - Debugging

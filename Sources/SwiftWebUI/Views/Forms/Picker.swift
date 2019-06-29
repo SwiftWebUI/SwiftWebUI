@@ -6,14 +6,6 @@
 //  Copyright © 2019 Helge Heß. All rights reserved.
 //
 
-/*
-Picker(selection: $leftIndex, label: Text("Picker")) {
-  ForEach(0..<leftSource.count) {
-    Text(self.leftSource[$0]).tag($0)
-  }
-  }.frame(width: UIScreen.main.bounds.width/2)
- */
-
 public struct Picker<Label: View, SelectionValue: Hashable, Content: View>: View
 {
   
