@@ -10,7 +10,7 @@ More details can be found on the related blog post at the
 [Always Right Institute](http://www.alwaysrightinstitute.com).
 
 At
-[WWDC 2019](https://developer.apple.com/wwdc19/).
+[WWDC 2019](https://developer.apple.com/wwdc19/)
 Apple announced 
 [SwiftUI](https://developer.apple.com/xcode/swiftui/).
 A single "cross platform", "declarative" framework used to build 
@@ -35,7 +35,6 @@ which display in a web browser:
 import SwiftWebUI
 
 struct MainPage: View {
-  
   @State var counter = 0
   
   func countUp() { 
@@ -56,10 +55,7 @@ struct MainPage: View {
 
 Results in:
 
-<center><img src=
-  "https://zeezide.com/img/AvocadoCounter.gif" 
-     align="center"
-  /></center>
+<center><img src="https://zeezide.com/img/AvocadoCounter.gif" align="center" /></center>
 
 Unlike some other efforts this doesn't just render SwiftUI Views
 as HTML. 
@@ -81,20 +77,18 @@ Use it to learn more about SwiftUI and its inner workings.
 
 As of today SwiftWebUI requires a 
 [macOS Catalina](https://www.apple.com/macos/catalina-preview/)
-installation to run (“Swift ABI” 🤦‍♀️).
-Fortunately it is really easy to
-[install Catalina on a separate APFS volume](https://support.apple.com/en-us/HT208891).
-And an installation of
+installation to run.
+An installation of
 [Xcode 11](https://developer.apple.com/xcode/)
 is required to get the new Swift 5.1 features SwiftUI makes heavy use of.
 
 
-### SwiftWebUI Hello World
+## SwiftWebUI Hello World
 
 To setup a SwiftWebUI project,
 create a "macOS tool project" in Xcode 11,
 then use the new SwiftPM integration and add
-[SwiftWebUI](https://github.com/SwiftWebUI/SwiftWebUI)
+`https://github.com/SwiftWebUI/SwiftWebUI`
 as a dependency.
 
 Open the `main.swift` file and replace it's content
@@ -108,13 +102,10 @@ SwiftWebUI.serve(Text("Holy Cow!"))
 Compile and run the app in Xcode, open Safari and hit
 [`http://localhost:1337/`](http://localhost:1337/):
 
-<center><img src=
-  "https://zeezide.com/img/holycow.png"
-     align="center"
-  /></center>
+<center><img src="https://zeezide.com/img/holycow.png" align="center" width="538" /></center>
   
 
-### 🥑🍞 AvocadoToast
+## 🥑🍞 AvocadoToast
 
 A small SwiftWebUI sample  based on the 
 [SwiftUI Essentials](https://developer.apple.com/videos/play/wwdc2019/216)
@@ -122,10 +113,10 @@ A small SwiftWebUI sample  based on the
 Find it over here:
 [AvocadoToast](https://github.com/SwiftWebUI/AvocadoToast).
 
-<center><img src="http://zeezide.com/img/AvocadoToast.gif" align="center" /></center>
+<center><img src="http://zeezide.com/img/AvocadoToast.gif" align="center" width="538" /></center>
 
 
-### Who
+## Who
 
 Brought to you by
 [The Always Right Institute](http://www.alwaysrightinstitute.com)
