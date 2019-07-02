@@ -28,7 +28,7 @@ extension HTMLTreeBuilder {
   {
     let configuration = view.configuration
     
-    let value = configuration.value.value
+    let value = configuration.value.wrappedValue
     let placeholder : String? = {
       guard let placeholder = configuration.placeholder else { return nil }
       return placeholder.contentString

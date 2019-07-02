@@ -24,7 +24,7 @@ struct SUIToggleNode: HTMLWrappingNode {
                  in context: TreeStateContext) throws
   {
     context.ignoreValueChange(value, for: elementID)
-    binding.value = value == "on"
+    binding.wrappedValue = value == "on"
   }
   
   func invoke(_ webID: [ String ], in context: TreeStateContext) throws {

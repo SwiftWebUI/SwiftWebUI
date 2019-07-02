@@ -21,7 +21,7 @@ struct SUIInputNode: HTMLLeafNode {
                  in context: TreeStateContext) throws
   {
     context.ignoreValueChange(value, for: elementID)
-    binding.value = value
+    binding.wrappedValue = value
   }
   
   func invoke(_ webID: [ String ], in context: TreeStateContext) throws {

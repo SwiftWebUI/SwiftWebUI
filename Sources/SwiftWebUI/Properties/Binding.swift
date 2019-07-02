@@ -51,7 +51,7 @@ public extension Binding {
     // TBD: Is this thinking right?
     var isOptional = false // captured and shared by closures
     self.init(
-      getValue: { return isOptional ? nil : base.value },
+      getValue: { return isOptional ? nil : base.wrappedValue },
       setValue: { newValue in
          if let value = newValue { isOptional = false; base.setter(value) }
          else { isOptional = true }
@@ -61,7 +61,7 @@ public extension Binding {
   
   init?(_ base: Binding<Value?>) {
     // TBD: does this actually make sense?
-    guard var value = base.value else { return nil }
+    guard var value = base.wrappedValue else { return nil }
     self.init(
       getValue: { return value },
       setValue: { newValue in value = newValue }
@@ -74,20 +74,20 @@ public extension Binding {
 
 extension Binding where Value: SetAlgebra, Value.Element: Hashable {
   public func contains(_ element: Value.Element) -> Binding<Bool> {
-    return Binding<Bool>.readOnly { self.value.contains(element) }
+    return Binding<Bool>.readOnly { self.wrappedValue.contains(element) }
   }
 }
 
 extension Binding where Value: RawRepresentable {
   public var rawValue: Binding<Value.RawValue> {
-    return Binding<Value.RawValue>.readOnly { self.value.rawValue }
+    return Binding<Value.RawValue>.readOnly { self.wrappedValue.rawValue }
   }
 }
 
 extension Binding where Value: CaseIterable, Value: Equatable {
   public var caseIndex: Binding<Value.AllCases.Index> {
     return Binding<Value.AllCases.Index>.readOnly {
-      return Value.allCases.firstIndex(of: self.value)!
+      return Value.allCases.firstIndex(of: self.wrappedValue)!
     }
   }
 }
@@ -114,19 +114,19 @@ extension Binding: Collection
   public typealias Index   = Value.Index
   public typealias Indices = Value.Indices
   
-  public var startIndex : Value.Index   { return value.startIndex }
-  public var endIndex   : Value.Index   { return value.endIndex   }
-  public var indices    : Value.Indices { return value.indices    }
+  public var startIndex : Value.Index   { return wrappedValue.startIndex }
+  public var endIndex   : Value.Index   { return wrappedValue.endIndex   }
+  public var indices    : Value.Indices { return wrappedValue.indices    }
 
   public func index(after i: Value.Index) -> Value.Index {
-    return value.index(after: i)
+    return wrappedValue.index(after: i)
   }
   public func formIndex(after i: inout Value.Index) {
-    return value.formIndex(after: &i)
+    return wrappedValue.formIndex(after: &i)
   }
   
   public subscript(position: Value.Index) -> Binding<Value.Element> {
-    return .readOnly { self.value[position] }
+    return .readOnly { self.wrappedValue[position] }
   }
 }
 
@@ -136,9 +136,9 @@ extension Binding: BidirectionalCollection
                   Value.Index: Hashable
 {
   public func index(before i: Value.Index) -> Value.Index {
-    return value.index(before: i)
+    return wrappedValue.index(before: i)
   }
   public func formIndex(before i: inout Value.Index) {
-    return value.formIndex(before: &i)
+    return wrappedValue.formIndex(before: &i)
   }
 }

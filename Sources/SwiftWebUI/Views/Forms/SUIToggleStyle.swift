@@ -35,7 +35,7 @@ extension HTMLTreeBuilder {
     
     return SUIToggleNode(elementID : context.currentElementID,
                          isEnabled : context.environment.isEnabled,
-                         isOn      : configuration.isOn.value,
+                         isOn      : configuration.isOn.wrappedValue,
                          binding   : configuration.isOn,
                          content   : childTree)
   }

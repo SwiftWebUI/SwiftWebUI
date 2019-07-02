@@ -69,7 +69,7 @@ public struct ObjectBinding<O: BindableObject>: _StateType {
   }
   
   public var projectedValue: Wrapper {
-    return Wrapper(value: value)
+    return Wrapper(value: wrappedValue)
   }
   // TBD: public var storageValue: Wrapper { get }
 

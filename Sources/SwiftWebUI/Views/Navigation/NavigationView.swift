@@ -35,7 +35,7 @@ public struct NavigationView<Root: View>: View {
       NavigationSidebar(root: root)
       NavigationContent()
     }
-    .environmentObject(navigationContext.value)
+    .environmentObject(navigationContext.wrappedValue)
   }
 }
 

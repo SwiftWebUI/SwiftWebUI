@@ -56,16 +56,16 @@ public extension Stepper {
                       @ViewBuilder label: () -> Label)
   {
     self.onIncrement = {
-      let nextValue = value.value.advanced(by: step)
+      let nextValue = value.wrappedValue.advanced(by: step)
       if bounds.contains(nextValue) {
-        value.value = nextValue
+        value.wrappedValue = nextValue
         onEditingChanged?(false) // TBD
       }
     }
     self.onDecrement = {
-      let nextValue = value.value.advanced(by: -step)
+      let nextValue = value.wrappedValue.advanced(by: -step)
       if bounds.contains(nextValue) {
-        value.value = nextValue
+        value.wrappedValue = nextValue
         onEditingChanged?(false)
       }
     }
@@ -79,11 +79,11 @@ public extension Stepper {
                       @ViewBuilder label: () -> Label)
   {
     self.onIncrement = {
-      value.value = value.value.advanced(by: step)
+      value.wrappedValue = value.wrappedValue.advanced(by: step)
       onEditingChanged?(false) // TBD
     }
     self.onDecrement = {
-      value.value = value.value.advanced(by: -step)
+      value.wrappedValue = value.wrappedValue.advanced(by: -step)
       onEditingChanged?(false)
     }
     self.onEditingChanged = nil

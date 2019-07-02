@@ -62,12 +62,12 @@ public struct State<Value>: BindingConvertible, _StateType {
     #if DEBUG && false
       print("called:", #function, "on:", self, "my ptr:", UnsafePointer(&self))
     #endif
-    _value = value // TBD: not used anyways?
+    _value = wrappedValue // TBD: not used anyways?
   }
   
   public var binding: Binding<Value> {
-    return Binding(getValue: { return self.value },
-                   setValue: { newValue in self.value = newValue })
+    return Binding(getValue: { return self.wrappedValue },
+                   setValue: { newValue in self.wrappedValue = newValue })
   }
   
   // MARK: - StateHolder Storage
