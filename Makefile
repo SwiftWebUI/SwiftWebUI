@@ -31,7 +31,7 @@ $(DOCKER_BUILD_PRODUCT): $(SWIFT_SOURCES)
           -v "$(PWD):/src" \
           -v "$(PWD)/$(DOCKER_BUILD_DIR):/src/.build" \
           "$(SWIFT_BUILD_IMAGE)" \
-          bash -c 'cd /src && swift build -c $(CONFIGURATION) && .build/x86_64-unknown-linux/$(CONFIGURATION)/$(TOOL_NAME)'
+          bash -c 'cd /src && swift build -c $(CONFIGURATION)'
 	ls -lah $(DOCKER_BUILD_PRODUCT)
 
 docker-all: $(DOCKER_BUILD_PRODUCT)
