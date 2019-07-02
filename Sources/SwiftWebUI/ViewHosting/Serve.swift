@@ -51,7 +51,7 @@ public enum SwiftWebUI {
     }
     
     endpoint.use(sessionViewBuilder)
-    endpoint.listen(port)
+    endpoint.listen(port, host)
     if waitUntilDone { endpoint.wait() }
   }
 
