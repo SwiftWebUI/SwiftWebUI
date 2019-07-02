@@ -19,17 +19,22 @@ extension Binding {
         ?? ""
       },
       setValue: { s in
-        var obj   : AnyObject?
-        var error : NSString?
-
-        guard formatter.getObjectValue(&obj, for: s,
-                                       errorDescription: &error) else
-        {
-          // Note: if that happens, we are our of sync!
-          print("WARN: failed to format input string:", s, type(of: self),
-                "error:", error ?? "?")
-          return
-        }
+        #if os(Linux) // getObjectValue is internal on Linux
+          print("PORT ME:", #function) // FIXME
+          let obj = s
+        #else
+          var obj   : AnyObject?
+          var error : NSString?
+  
+          guard formatter.getObjectValue(&obj, for: s,
+                                         errorDescription: &error) else
+          {
+            // Note: if that happens, we are our of sync!
+            print("WARN: failed to format input string:", s, type(of: self),
+                  "error:", error ?? "?")
+            return
+          }
+        #endif
 
         guard let v = obj as? Value else {
           print("WARN: failed to convert formatted input string:",
@@ -44,7 +49,7 @@ extension Binding {
   
 }
 
-#if DEBUG
+#if DEBUG && !os(Linux)
 extension Binding where Value == String {
   
   func formatter(_ formatter: Formatter) -> Binding<String> {
