@@ -70,4 +70,5 @@ fastlane/test_output
 # hh
 .DS_Store
 Package.resolved
+.docker.build
 
