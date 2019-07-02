@@ -11,9 +11,6 @@
 
 // Note:
 // I need a lot of help with those :-)
-// FIXME:
-// - This overrides some of the SemanticUI styles (hence the !important),
-//   replace w/ proper more specific selectors.
 
 let SwiftWebUIStyles =
 """
@@ -59,15 +56,15 @@ html, body {
   background-color: #FAFAFA;
   cursor: pointer;
 }
-.swiftui-list > .item {
-  padding-left   : 0.5rem !important;
-  padding-right  : 0.5rem !important;
+.swiftui-list.ui.list > .item {
+  padding-left   : 0.5rem;
+  padding-right  : 0.5rem;
 }
-.swiftui-list > .item:first-child {
-  padding-top    : 0.5rem !important;
+.swiftui-list.ui.list > .item:first-child {
+  padding-top    : 0.5rem;
 }
-.swiftui-list > .item:last-child {
-  padding-bottom : 0.5rem !important;
+.swiftui-list.ui.list > .item:last-child {
+  padding-bottom : 0.5rem;
 }
 .swiftui-list > .item.active {
   background-color: #EEE;
@@ -116,11 +113,13 @@ div.swiftui-list > div.item > button.ui.button.active
   --swiftui-hpadding: 0.6em;
 }
 .swiftui-stack .swiftui-spacer { flex-grow: 99; }
+
 .swiftui-vstack > * + * {
-  margin-top:  var(--swiftui-vpadding) !important; /* SUI also sets this */
+  margin-top: var(--swiftui-vpadding);
 }
+
 .swiftui-hstack > * + * {
-  margin-left: var(--swiftui-hpadding) !important;
+  margin-left: var(--swiftui-hpadding);
 }
 
 .swiftui-vstack > .ui.divider {
