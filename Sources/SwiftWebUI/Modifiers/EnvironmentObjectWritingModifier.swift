@@ -6,7 +6,6 @@
 //  Copyright © 2019 Helge Heß. All rights reserved.
 //
 
-#if canImport(Combine)
 public extension View {
 
   func environmentObject<O: BindableObject>(_ object: O)
@@ -34,5 +33,3 @@ public struct EnvironmentObjectWritingModifier<O: BindableObject>
     context.environmentStack.removeLast()
   }
 }
-
-#endif // canImport(Combine)

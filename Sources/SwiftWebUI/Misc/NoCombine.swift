@@ -39,6 +39,9 @@ public protocol Subscriber {
 public enum Subscribers {
   public enum Demand: Equatable, Comparable {
     case unlimited
+    public static func < (lhs: Self, rhs: Self) -> Bool {
+      return true
+    }
   }
   public enum Completion<Failure: Error> {
     case finished
@@ -76,6 +79,50 @@ final public class PassthroughSubject<Output, Failure: Error>: Subject {
   }
   final public func send(completion: Subscribers.Completion<Failure>) {
     print("ERROR: not sending completion:", completion)
+  }
+}
+
+public extension Subscribers {
+
+  final class Sink<Upstream: Publisher>: Subscriber, Cancellable {
+
+     public typealias Input   = Upstream.Output
+     public typealias Failure = Upstream.Failure
+     
+     public let receiveCompletion : ( Subscribers.Completion<Upstream.Failure> ) -> Void
+     public let receiveValue      : ( Upstream.Output ) -> Void
+
+     public init(receiveCompletion : @escaping ( Subscribers.Completion<Upstream.Failure> ) -> Void,
+                 receiveValue      : @escaping ( Upstream.Output ) -> Void)
+     {
+       self.receiveCompletion = receiveCompletion
+       self.receiveValue      = receiveValue
+     }
+
+     public func receive(subscription: Subscription) {
+     }
+     public func receive(_ input: Input) -> Subscribers.Demand {
+       receiveValue(input)
+       return .unlimited
+     }
+     public func receive(completion: Subscribers.Completion<Failure>) {
+       receiveCompletion(completion)
+     }
+
+     public func cancel() {
+       print("can't cancel a sink yet, sorrrrrrz.")
+     }
+   }
+}
+
+public extension Publisher {
+  func sink(receiveCompletion : (( Subscribers.Completion<Self.Failure> ) -> Void)? = nil,
+            receiveValue      : @escaping ( Self.Output ) -> Void)
+       -> Subscribers.Sink<Self>
+  {
+    print("IMPLEMENT ME: not actually subscribing sink ...")
+    return Subscribers.Sink(receiveCompletion: receiveCompletion ?? { _ in },
+                            receiveValue: receiveValue)
   }
 }
 

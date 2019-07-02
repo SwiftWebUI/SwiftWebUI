@@ -8,7 +8,8 @@
 
 // FIXME: Combine requires 10.15, maybe provide a simple alternative
 #if canImport(Combine)
-import Combine
+  import Combine
+#endif
 
 public protocol BindableObject: AnyObject, DynamicViewProperty, Identifiable {
   
@@ -26,5 +27,3 @@ public extension BindableObject {
                    setValue: { self[keyPath: keyPath] = $0   })
   }
 }
-
-#endif // canImport(Combine)

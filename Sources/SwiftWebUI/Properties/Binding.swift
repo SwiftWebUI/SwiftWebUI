@@ -6,10 +6,8 @@
 //  Copyright © 2019 Helge Heß. All rights reserved.
 //
 
-@propertyDelegate public struct Binding<Value> {
-  // TBD: kinda like WOAssociation?
-  
-  // TBD: transaction, what about that?
+@propertyDelegate
+public struct Binding<Value> {
   
   public var value : Value {
     nonmutating set { setter(newValue) }
