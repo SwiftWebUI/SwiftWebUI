@@ -91,14 +91,26 @@ public extension Subscribers {
      
      public let receiveCompletion : ( Subscribers.Completion<Upstream.Failure> ) -> Void
      public let receiveValue      : ( Upstream.Output ) -> Void
-     
-     func receive(subscription: Subscription) {
+
+     public init(receiveCompletion : @escaping ( Subscribers.Completion<Upstream.Failure> ) -> Void,
+                 receiveValue      : @escaping ( Upstream.Output ) -> Void)
+     {
+       self.receiveCompletion = receiveCompletion
+       self.receiveValue      = receiveValue
      }
-     func receive(_ input: Input) -> Subscribers.Demand {
+
+     public func receive(subscription: Subscription) {
+     }
+     public func receive(_ input: Input) -> Subscribers.Demand {
        receiveValue(input)
+       return .unlimited
      }
-     func receive(completion: Subscribers.Completion<Failure>) {
+     public func receive(completion: Subscribers.Completion<Failure>) {
        receiveCompletion(completion)
+     }
+
+     public func cancel() {
+       print("can't cancel a sink yet, sorrrrrrz.")
      }
    }
 }
@@ -108,9 +120,9 @@ public extension Publisher {
             receiveValue      : @escaping ( Self.Output ) -> Void)
        -> Subscribers.Sink<Self>
   {
-    print("ERROR: not sending completion:", completion)
-    return Sink(receiveCompletion, receiveCompletion ?? { _ in },
-                receiveValue: receiveValue)
+    print("IMPLEMENT ME: not actually subscribing sink ...")
+    return Subscribers.Sink(receiveCompletion: receiveCompletion ?? { _ in },
+                            receiveValue: receiveValue)
   }
 }
 
