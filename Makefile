@@ -43,3 +43,10 @@ docker-distclean:
 	rm -rf $(DOCKER_BUILD_DIR)
 
 distclean: clean docker-distclean
+
+docker-emacs:
+	docker run --rm -it \
+	          -v "$(PWD):/src" \
+	          -v "$(PWD)/$(DOCKER_BUILD_DIR):/src/.build" \
+	          "$(SWIFT_BUILD_IMAGE)" \
+		  emacs /src
