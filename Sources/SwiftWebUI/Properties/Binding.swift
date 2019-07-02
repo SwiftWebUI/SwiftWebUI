@@ -8,9 +8,6 @@
 
 @propertyWrapper
 public struct Binding<Value> {
-  // TBD: kinda like WOAssociation?
-  
-  // TBD: transaction, what about that?
   
   public var wrappedValue : Value {
     nonmutating set { setter(newValue) }
