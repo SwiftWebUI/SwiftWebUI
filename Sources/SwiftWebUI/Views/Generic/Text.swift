@@ -35,7 +35,11 @@ public struct Text : Equatable, View {
   
   public init(_ value: Any?, formatter: Formatter) {
     // TBD: we could support attributed strings!
-    self.init(verbatim: formatter.string(for: value) ?? "??")
+    #if os(Linux)
+      self.init(verbatim: formatter.string(for: value as Any) ?? "??")
+    #else
+      self.init(verbatim: formatter.string(for: value) ?? "??")
+    #endif
   }
   
   private init(runs: [ Run ]) {
