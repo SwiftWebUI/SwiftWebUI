@@ -28,7 +28,8 @@ public enum SwiftWebUI {
    *       }
    *     }
    */
-  public static func serve<V: View>(port: Int = 1337,
+  public static func serve<V: View>(port : Int    = 1337,
+                                    host : String = "0.0.0.0",
                                     waitUntilDone: Bool = true,
                                     sessionViewBuilder: @escaping () -> V)
   {
@@ -63,10 +64,11 @@ public enum SwiftWebUI {
    * There is also a closure based variant which allows you to implement
    * per-session state.
    */
-  public static func serve<V: View>(port: Int = 1337,
+  public static func serve<V: View>(port : Int = 1337,
+                                    host : String = "0.0.0.0",
                                     waitUntilDone: Bool = true,
                                     _ view: V)
   {
-    serve(port: port, waitUntilDone: waitUntilDone) { return view }
+    serve(port: port, host: host, waitUntilDone: waitUntilDone) { return view }
   }
 }
