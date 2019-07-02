@@ -22,7 +22,7 @@ all:
 	
 clean :
 	$(SWIFT_CLEAN)
-	# We have a different definition of "clean", might be just Germany
+	# We have a different definition of "clean", might be just German
 	# pickyness.
 	rm -rf $(SWIFT_BUILD_DIR) 
 
