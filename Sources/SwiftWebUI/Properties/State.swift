@@ -6,7 +6,7 @@
 //  Copyright © 2019 Helge Heß. All rights reserved.
 //
 
-@propertyDelegate
+@propertyWrapper
 public struct State<Value>: BindingConvertible, _StateType {
   // Sample:
   //   struct MyView : View {
@@ -27,7 +27,7 @@ public struct State<Value>: BindingConvertible, _StateType {
     self._value = initialValue
   }
   
-  public var value : Value {
+  public var wrappedValue : Value {
     get {
       assert(_slot != nil, "you cannot access @State outside of `body`")
       guard let slot = _slot else { return _value }
@@ -45,7 +45,7 @@ public struct State<Value>: BindingConvertible, _StateType {
     }
   }
   
-  public var delegateValue: Binding<Value> {
+  public var projectedValue: Binding<Value> {
     // This exposes the "$state" property as a `Binding<Value>` instead of
     // `State<Value>`.
     return binding

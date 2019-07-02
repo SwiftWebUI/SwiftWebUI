@@ -6,12 +6,13 @@
 //  Copyright © 2019 Helge Heß. All rights reserved.
 //
 
-@propertyDelegate public struct Binding<Value> {
+@propertyWrapper
+public struct Binding<Value> {
   // TBD: kinda like WOAssociation?
   
   // TBD: transaction, what about that?
   
-  public var value : Value {
+  public var wrappedValue : Value {
     nonmutating set { setter(newValue) }
     get { return getter() }
   }
