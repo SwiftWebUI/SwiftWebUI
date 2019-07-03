@@ -21,7 +21,7 @@ extension HTMLTreeBuilder {
   {
     typealias TraitValues = TabbedViewTraitValues<SelectionValue>
     
-    let currentSelection = view.selection.value
+    let currentSelection = view.selection.wrappedValue
     
     // crazy shit :->
     let ( childTree, traits ) : ( HTMLTreeNode, [ TraitValues ] )
@@ -70,7 +70,7 @@ extension HTMLTreeBuilder {
     }
     
     return SUITabContainerNode(elementID : context.currentElementID,
-                               selection : view.selection.value,
+                               selection : view.selection.wrappedValue,
                                tabItems  : tabItems,
                                content   : enrichedChildTree)
   }

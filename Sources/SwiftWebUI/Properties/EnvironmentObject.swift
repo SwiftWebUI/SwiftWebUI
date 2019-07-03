@@ -7,11 +7,11 @@
 //
 
 #if canImport(Combine)
-import Combine
-// Uses `.sink` and `AnyCancellable` on the BindableObject
+  import Combine
+  // Uses `.sink` and `AnyCancellable` on the BindableObject
 #endif
 
-@propertyDelegate
+@propertyWrapper
 public struct EnvironmentObject<O: BindableObject>: _StateType {
   // TODO: This is pretty much a copy of the @BindableObject with only minor
   //       differences.
@@ -20,7 +20,7 @@ public struct EnvironmentObject<O: BindableObject>: _StateType {
   
   public init() {} // has no own value
   
-  public var value : O {
+  public var wrappedValue : O {
     get {
       guard let slot = _slot else {
         fatalError("you cannot access @EnvironmentObject outside of `body`")

@@ -6,7 +6,7 @@
 //  Copyright © 2019 Helge Heß. All rights reserved.
 //
 
-@propertyDelegate
+@propertyWrapper
 public struct Environment<Value>: DynamicViewProperty {
   
   // (\EnvironmentValues.isEnabled) or just (\.isEnabled)
@@ -22,7 +22,7 @@ public struct Environment<Value>: DynamicViewProperty {
 
   private var _value: Value?
 
-  public var value: Value {
+  public var wrappedValue: Value {
     guard let value = _value else {
       fatalError("you cannot access @Environment outside of `body`")
     }

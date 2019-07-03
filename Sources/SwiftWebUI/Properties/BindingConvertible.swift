@@ -23,8 +23,8 @@ public extension BindingConvertible {
   subscript<Subject>(dynamicMember path: WritableKeyPath<Self.Value, Subject>)
                      -> Binding<Subject>
   {
-    return Binding(getValue: { return self.binding.value[keyPath: path] },
-                   setValue: { self.binding.value[keyPath: path] = $0 })
+    return Binding(getValue: { return self.binding.wrappedValue[keyPath: path] },
+                   setValue: { self.binding.wrappedValue[keyPath: path] = $0 })
   }
 }
 
@@ -34,10 +34,10 @@ public extension BindingConvertible {
        -> Binding< ( Self.Value, T.Value ) >
   {
     return Binding(
-      getValue: { return ( self.binding.value, rhs.binding.value ) },
+      getValue: { return ( self.binding.wrappedValue, rhs.binding.wrappedValue ) },
       setValue: { ( newLHS, newRHS ) in
-        self.binding.value = newLHS
-        rhs.binding.value  = newRHS
+        self.binding.wrappedValue = newLHS
+        rhs.binding.wrappedValue  = newRHS
       }
     )
   }
@@ -46,6 +46,6 @@ public extension BindingConvertible {
 
 extension Binding : BindingConvertible {
 
-  public var binding : Binding<Self.Value> { return self }
+  public var binding : Self { return self }
 
 }

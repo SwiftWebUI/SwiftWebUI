@@ -56,7 +56,7 @@ extension HTMLTreeBuilder {
                                               collect: TagTrait.self,
                                               in: context)
     
-    let currentSelection = view.selection.value
+    let currentSelection = view.selection.wrappedValue
     let isEnabled = context.environment.isEnabled
     var i = 0
     let enrichedChildTree = childTree.rewrite { node in
@@ -81,7 +81,7 @@ extension HTMLTreeBuilder {
                                  isEnabled : isEnabled,
                                  isActive  : currentSelection == tag,
                                  action: {
-                                  view.selection.value = tag
+                                  view.selection.wrappedValue = tag
                                   if let action = view.action {
                                     action()
                                   }

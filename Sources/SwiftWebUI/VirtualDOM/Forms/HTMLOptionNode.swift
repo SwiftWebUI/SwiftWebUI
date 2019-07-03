@@ -26,7 +26,7 @@ struct HTMLOptionNode<S: Hashable>: HTMLWrappingNode {
   func invoke(_ webID: [ String ], in context: TreeStateContext) throws {
     guard elementID.isContainedInWebID(webID) else { return }
     if elementID.count == webID.count {
-      binding.value = tag
+      binding.wrappedValue = tag
       return
     }
     else { // this should be rare

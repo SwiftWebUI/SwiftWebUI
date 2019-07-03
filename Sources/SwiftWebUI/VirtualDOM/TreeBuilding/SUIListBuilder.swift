@@ -26,7 +26,7 @@ extension HTMLTreeBuilder { // Lists
 
       let isSelected : Bool = {
         guard let tag = tag else { return false }
-        return view.selection?.value.isSelected(tag) ?? false
+        return view.selection?.wrappedValue.isSelected(tag) ?? false
       }()
       
       var contentNode = node

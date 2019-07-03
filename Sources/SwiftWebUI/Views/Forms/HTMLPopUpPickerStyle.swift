@@ -42,7 +42,7 @@ extension HTMLTreeBuilder {
                                               collect: TagTrait.self,
                                               in: context)
     
-    let currentSelection = configuration.selection.value
+    let currentSelection = configuration.selection.wrappedValue
     let isEnabled = context.environment.isEnabled
     
     var i = 0

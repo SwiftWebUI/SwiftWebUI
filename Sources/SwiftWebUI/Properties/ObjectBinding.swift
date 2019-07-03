@@ -7,15 +7,16 @@
 //
 
 #if canImport(Combine)
-import Combine
+  import Combine
+#endif
 
-@propertyDelegate
+@propertyWrapper
 public struct ObjectBinding<O: BindableObject>: _StateType {
 
   var _slot : StateHolder.StateEntryPointer = nil
   private var _value: O
   
-  public var value : O {
+  public var wrappedValue : O {
     get {
       assert(_slot != nil, "you cannot access @State outside of `body`")
       guard let slot = _slot else { return _value }
@@ -67,8 +68,8 @@ public struct ObjectBinding<O: BindableObject>: _StateType {
     }
   }
   
-  public var delegateValue: Wrapper {
-    return Wrapper(value: value)
+  public var projectedValue: Wrapper {
+    return Wrapper(value: wrappedValue)
   }
   // TBD: public var storageValue: Wrapper { get }
 
@@ -108,5 +109,3 @@ fileprivate struct MyView : View {
   }
 }
 #endif
-
-#endif // canImport(Combine)

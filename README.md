@@ -6,6 +6,7 @@
 ![Swift5.1](https://img.shields.io/badge/swift-5.1-blue.svg)
 ![macOS](https://img.shields.io/badge/os-macOS-green.svg?style=flat)
 ![tuxOS](https://img.shields.io/badge/os-tuxOS-orange.svg?style=flat)
+![Travis](https://api.travis-ci.org/SwiftWebUI/SwiftWebUI.svg?branch=develop&style=flat)
 
 More details can be found on the related blog post at the
 [Always Right Institute](http://www.alwaysrightinstitute.com).
@@ -84,8 +85,7 @@ An installation of
 is required to get the new Swift 5.1 features SwiftUI makes heavy use of.
 
 *Update 2019-06-02*: Now also "almost" runs on Linux (navigation not working
-due to its use of Combine). Linux support can be found in the `feature/linux-1`
-branch.
+due to its use of Combine).
 
 
 ## SwiftWebUI Hello World

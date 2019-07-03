@@ -39,7 +39,7 @@ struct SUIListItemNode<Selection: SelectionManager>: HTMLWrappingNode {
       assert(selection != nil, "click event on element w/o selection")
       assert(value     != nil, "click event on element w/o value")
       if let value = value, let selection = selection {
-        selection.value.toggle(value)
+        selection.wrappedValue.toggle(value)
       }
       return
     }

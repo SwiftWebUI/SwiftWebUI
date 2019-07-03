@@ -14,8 +14,8 @@ extension Binding {
   func formatter(_ formatter: Formatter) -> Binding<String> {
     return Binding<String>(
       getValue: {
-           formatter.editingString(for: self.value)
-        ?? formatter.string       (for: self.value)
+           formatter.editingString(for: self.wrappedValue)
+        ?? formatter.string       (for: self.wrappedValue)
         ?? ""
       },
       setValue: { s in
@@ -42,7 +42,7 @@ extension Binding {
           return
         }
         
-        self.value = v
+        self.wrappedValue = v
       }
     )
   }
@@ -55,7 +55,7 @@ extension Binding where Value == String {
   func formatter(_ formatter: Formatter) -> Binding<String> {
     return Binding<String>(
       getValue: {
-        let v = self.value
+        let v = self.wrappedValue
         return formatter.editingString(for: v)
             ?? formatter.string       (for: v)
             ?? "FmtErr<" + v + ">"
@@ -74,13 +74,13 @@ extension Binding where Value == String {
         }
         
         if let v = obj as? String {
-          self.value = v
+          self.wrappedValue = v
         }
         else if let obj = obj {
-          self.value = "FmtErr<\(obj)>"
+          self.wrappedValue = "FmtErr<\(obj)>"
         }
         else {
-          self.value = "FmtErr<None>"
+          self.wrappedValue = "FmtErr<None>"
         }
       }
     )
