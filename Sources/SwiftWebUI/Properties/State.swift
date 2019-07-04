@@ -45,7 +45,14 @@ public struct State<Value>: BindingConvertible, _StateType {
     }
   }
   
-  public var projectedValue: Binding<Value> {
+  #if os(Linux)
+    public var projectedValue: Binding<Value> {
+      // This exposes the "$state" property as a `Binding<Value>` instead of
+      // `State<Value>`.
+      return binding
+    }
+  #endif
+  public var wrapperValue: Binding<Value> {
     // This exposes the "$state" property as a `Binding<Value>` instead of
     // `State<Value>`.
     return binding

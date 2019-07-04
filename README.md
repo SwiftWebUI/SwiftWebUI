@@ -78,13 +78,15 @@ Use it to learn more about SwiftUI and its inner workings.
 ## Requirements
 
 As of today SwiftWebUI requires a 
-[macOS Catalina](https://www.apple.com/macos/catalina-preview/)
+[macOS Catalina](https://www.apple.com/macos/catalina-preview/) beta 3
 installation to run.
 An installation of
-[Xcode 11](https://developer.apple.com/xcode/)
+[Xcode 11](https://developer.apple.com/xcode/) beta 3
 is required to get the new Swift 5.1 features SwiftUI makes heavy use of.
 
-*Update 2019-06-02*: Now also "almost" runs on Linux (navigation not working
+Note: Catalina and Xcode versions MUST match.
+
+*Update 2019-06-02*: Now also "mostly" runs on Linux (navigation not working
 due to its use of Combine).
 
 
