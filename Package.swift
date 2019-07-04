@@ -17,15 +17,13 @@ let package = Package(
     .package(url: "https://github.com/SwiftWebResources/SemanticUI-Swift.git",
              from: "2.3.4"),
     .package(url: "https://github.com/wickwirew/Runtime.git",
-             from: "2.1.0"),
-    .package(url: "https://github.com/onmyway133/SwiftHash.git",
-             from: "2.0.2")               
+             from: "2.1.0")
   ],
   targets: [
     .target(name: "SwiftWebUI",
             dependencies: [ 
                 "NIO", "NIOHTTP1", "NIOConcurrencyHelpers", 
-                "SwiftHash", "Runtime", "SemanticUI" 
+                "Runtime", "SemanticUI" 
             ]),
     .target(name: "HolyCow", dependencies: [ "SwiftWebUI" ])
   ]
