@@ -9,6 +9,8 @@
 // FIXME: Combine requires 10.15, maybe provide a simple alternative
 #if canImport(Combine)
   import Combine
+#elseif canImport(OpenCombine)
+  import OpenCombine
 #endif
 
 public protocol BindableObject: AnyObject, DynamicViewProperty, Identifiable {

@@ -6,7 +6,7 @@
 //  Copyright © 2019 Helge Heß. All rights reserved.
 //
 
-#if !canImport(Combine)
+#if !canImport(Combine) && !canImport(OpenCombine)
 
 // TODO: This needs more work. Just the basics to get synchronous event emitters
 //       working w/o Combine.
