@@ -36,10 +36,10 @@ public struct Stepper<Label: View>: View {
     HStack {
       HTMLContainer(classes: [ "ui", "icon", "buttons", "small" ]) {
         // Enabling/Disabling +/- would be nice once bounds are hit
-        Button(self.decrement) {
+        Button(action: self.decrement) {
           HTMLContainer("i", classes: [ "minus", "icon" ], body: {EmptyView()})
         }
-        Button(self.increment) {
+        Button(action: self.increment) {
           HTMLContainer("i", classes: [ "plus", "icon" ], body: {EmptyView()})
         }
       }
