@@ -1,13 +1,10 @@
 //
-//  NavigationButton.swift
+//  NavigationLink.swift
 //  SwiftWebUI
 //
 //  Created by Helge Heß on 22.06.19.
 //  Copyright © 2019 Helge Heß. All rights reserved.
 //
-
-@available(*, deprecated, renamed: "NavigationLink")
-public typealias NavigationButton = NavigationLink
 
 public struct NavigationLink<Content: View, Destination: View>: View {
   // TBD: What is NavigationDestinationLink? Same like a navcontext?
@@ -28,10 +25,8 @@ public struct NavigationLink<Content: View, Destination: View>: View {
   }
   
   public var body: some View {
-    Button(onClick) {
-      content
-    }
-    .relativeWidth(1.0)
+    Button(action: onClick, label: content)
+      .relativeWidth(1.0)
   }
   
   func onClick() {
@@ -39,3 +34,6 @@ public struct NavigationLink<Content: View, Destination: View>: View {
     navigationContext.navigate(to: destination)
   }
 }
+
+@available(*, deprecated, renamed: "NavigationLink")
+public typealias NavigationButton = NavigationLink

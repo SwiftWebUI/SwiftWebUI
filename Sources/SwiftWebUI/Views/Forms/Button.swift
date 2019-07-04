@@ -15,22 +15,36 @@ public struct Button<Label: View>: View {
   let action : () -> Void
   let label  : Label
   
+  @available(*, deprecated, renamed: "init(action:label:)")
   public init(_ action: @escaping () -> Void, @ViewBuilder label: () -> Label) {
     self.action = action
     self.label  = label()
   }
-  
+  public init(action: @escaping () -> Void, @ViewBuilder label: () -> Label) {
+    self.action = action
+    self.label  = label()
+  }
+
   init(action: @escaping () -> Void, label: Label) {
     self.action = action
     self.label  = label
   }
 }
 
-extension Button where Label == ButtonStyleLabel {
+public extension Button where Label == ButtonStyleLabel {
   init<T: View>(action: @escaping () -> Void, label: T) {
     self.action = action
     self.label  = ButtonStyleLabel(label)
   }
+}
+
+public extension Button where Label == Text {
+
+  init<S: StringProtocol>(_ title: S, action: @escaping () -> Void) {
+    self.action = action
+    self.label  = Text(title)
+  }
+
 }
 
 extension HTMLTreeBuilder {
