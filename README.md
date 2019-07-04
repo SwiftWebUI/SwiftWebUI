@@ -86,8 +86,7 @@ is required to get the new Swift 5.1 features SwiftUI makes heavy use of.
 
 Note: Catalina and Xcode versions MUST match.
 
-*Update 2019-06-02*: Now also "mostly" runs on Linux (navigation not working
-due to its use of Combine).
+*Update 2019-07-04*: Now runs on Linux w/ OpenCombine.
 
 
 ## SwiftWebUI Hello World
