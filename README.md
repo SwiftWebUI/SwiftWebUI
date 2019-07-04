@@ -5,7 +5,7 @@
 
 ![Swift5.1](https://img.shields.io/badge/swift-5.1-blue.svg)
 ![macOS](https://img.shields.io/badge/os-macOS-green.svg?style=flat)
-![tuxOS](https://img.shields.io/badge/os-tuxOS-orange.svg?style=flat)
+![tuxOS](https://img.shields.io/badge/os-tuxOS-green.svg?style=flat)
 ![Travis](https://api.travis-ci.org/SwiftWebUI/SwiftWebUI.svg?branch=develop&style=flat)
 
 More details can be found on the related blog post at the
