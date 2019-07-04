@@ -8,7 +8,8 @@
 
 #if canImport(Combine)
   import Combine
-  // Uses `.sink` and `AnyCancellable` on the BindableObject
+#elseif canImport(OpenCombine)
+  import OpenCombine
 #endif
 
 @propertyWrapper
