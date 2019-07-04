@@ -68,7 +68,12 @@ public struct ObjectBinding<O: BindableObject>: _StateType {
     }
   }
   
-  public var projectedValue: Wrapper {
+  #if os(Linux)
+    public var projectedValue: Wrapper {
+      return Wrapper(value: wrappedValue)
+    }
+  #endif
+  public var wrapperValue: Wrapper {
     return Wrapper(value: wrappedValue)
   }
   // TBD: public var storageValue: Wrapper { get }
