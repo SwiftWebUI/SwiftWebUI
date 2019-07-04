@@ -6,7 +6,10 @@
 //  Copyright © 2019 Helge Heß. All rights reserved.
 //
 
-public struct NavigationButton<Content: View, Destination: View>: View {
+@available(*, deprecated, renamed: "NavigationLink")
+public typealias NavigationButton = NavigationLink
+
+public struct NavigationLink<Content: View, Destination: View>: View {
   // TBD: What is NavigationDestinationLink? Same like a navcontext?
   
   @EnvironmentObject private var navigationContext: NavigationContext
