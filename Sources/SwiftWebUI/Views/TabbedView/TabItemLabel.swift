@@ -10,10 +10,18 @@ import Foundation
 
 public extension View {
 
-  func tabItemLabel<V: View>(_ item: V)
+  func tabItem<V: View>(_ item: V)
        -> Self.Modified<TraitWritingModifier<TabItemLabel>>
   {
     // The official doesn't carry a type here, but just `AnyView?`. Hm.
+    return modifier(TraitWritingModifier(content:
+                      TabItemLabel(value: AnyView(item))))
+  }
+  
+  @available(*, deprecated, renamed: "tabItem")
+  func tabItemLabel<V: View>(_ item: V)
+       -> Self.Modified<TraitWritingModifier<TabItemLabel>>
+  {
     return modifier(TraitWritingModifier(content:
                       TabItemLabel(value: AnyView(item))))
   }
