@@ -95,16 +95,8 @@ extension Binding where Value: CaseIterable, Value: Equatable {
 extension Binding: Sequence
             where Value: MutableCollection, Value.Index: Hashable
 {
-  public typealias Element = Binding<Value.Element>
-  
-  public typealias Iterator = IndexingIterator<Binding<Value>>
-  
-  /// A sequence that represents a contiguous subrange of the collection's
-  /// elements.
-  ///
-  /// This associated type appears as a requirement in the `Sequence`
-  /// protocol, but it is restated here with stricter constraints. In a
-  /// collection, the subsequence should also conform to `Collection`.
+  public typealias Element     = Binding<Value.Element>
+  public typealias Iterator    = IndexingIterator<Binding<Value>>
   public typealias SubSequence = Slice<Binding<Value>>
 }
 
