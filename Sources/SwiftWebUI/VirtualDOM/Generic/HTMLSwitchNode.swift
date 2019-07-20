@@ -55,8 +55,8 @@ struct HTMLSwitchNode<ID: Hashable> : HTMLWrappingNode {
   
   public func dump(nesting: Int) {
     let indent = String(repeating: "  ", count: nesting)
-    print("\(indent)<Scroller>")
+    print("\(indent)<Switch>")
     content.dump(nesting: nesting + 1)
-    print("\(indent)</Scroller>")
+    print("\(indent)</Switch>")
   }
 }
