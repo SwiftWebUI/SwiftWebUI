@@ -83,6 +83,7 @@ public struct Text : Equatable, View {
     case bold, italic
     case color(Color?)
     case font(Font?)
+    case shadow(Shadow)
 
     var description: String {
       switch self {
@@ -92,6 +93,7 @@ public struct Text : Equatable, View {
         case .color(.some(let v)): return "color(\(v.cssStringValue))"
         case .font(.none):         return "font-reset"
         case .font(.some(let v)):  return "font(\(v))"
+        case .shadow(let v):       return "shadow(\(v))"
       }
     }
     
@@ -163,5 +165,8 @@ public extension Text {
   func italic()              -> Text { return adding(.italic) }
   func color(_ color: Color) -> Text { return adding(.color(color)) }
   func font (_ font: Font?)  -> Text { return adding(.font(font))   }
+  func shadow(color: Color = .black, radius: Length, x: Length = 0, y: Length = 0) -> Text {
+        return adding(.shadow(Shadow(color: color, radius: radius, x: x, y: y)))
+    }
 
 }

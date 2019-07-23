@@ -41,6 +41,9 @@ public enum CSSStyleKey : String, Hashable {
   case borderRight     = "border-right"
   
   case borderRadius    = "border-radius"
+    
+  case boxShadow       = "box-shadow"
+  case textShadow      = "text-shadow"
 
   // really "spacing"
   case vPadding        = "--swiftui-vpadding"
