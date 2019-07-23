@@ -41,7 +41,8 @@ struct HTMLShadowNode: HTMLWrappingNode {
     guard let oldNode = sameType(oldNode, &changeset) else { return }
     
     if oldNode.value != value {
-      print("TODO: implement:", #function, "in shadow:", Self.self)
+      changeset.append(.setAttribute(webID: elementID.webID, attribute: "style",
+                                     value: styles?.cssStringValue ?? ""))
     }
     
     content.generateChanges(from: oldNode.content, into: &changeset,
