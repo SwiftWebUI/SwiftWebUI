@@ -41,6 +41,9 @@ struct HTMLTextNode : HTMLLeafNode, CustomStringConvertible {
           }
           //let style  : TextStyle
           //let design : Design
+        
+        case .shadow(let shadow):
+          styles[.textShadow] = shadow.cssStringValue
       }
     }
     return styles
