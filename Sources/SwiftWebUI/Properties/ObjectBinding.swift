@@ -52,8 +52,8 @@ public struct ObjectBinding<O: BindableObject>: _StateType {
     }
   }
   
-  public init(initialValue: O) {
-    self._value = initialValue
+  public init(wrappedValue: O) {
+    self._value = wrappedValue
   }
   
   // MARK: - Exposed Values
@@ -70,12 +70,7 @@ public struct ObjectBinding<O: BindableObject>: _StateType {
     }
   }
   
-  #if os(Linux)
-    public var projectedValue: Wrapper {
-      return Wrapper(value: wrappedValue)
-    }
-  #endif
-  public var wrapperValue: Wrapper {
+  public var projectedValue: Wrapper {
     return Wrapper(value: wrappedValue)
   }
   // TBD: public var storageValue: Wrapper { get }

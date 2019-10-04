@@ -20,7 +20,7 @@ public struct NavigationView<Root: View>: View {
   public init<EV: View>(emptyView: EV, @ViewBuilder root: () -> Root) {
     self.root = root()
     self.emptyView = AnyView(emptyView)
-    navigationContext = .init(initialValue: NavigationContext(emptyView))
+    navigationContext = .init(wrappedValue: NavigationContext(emptyView))
   }
   public init(@ViewBuilder root: () -> Root) {
     self.init(emptyView: VStack {
