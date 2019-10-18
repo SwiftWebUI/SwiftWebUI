@@ -8,18 +8,18 @@
 
 extension HTMLTreeBuilder {
   
-  fileprivate typealias TabbedViewTraitValues<SelectionValue: Hashable> = (
+  fileprivate typealias TabViewTraitValues<SelectionValue: Hashable> = (
     elementID : ElementID,
     tag       : ViewTag<SelectionValue>?,
     labelView : TabItemLabel?
   )
   
   func buildTree<SelectionValue: Hashable, Content: View>(
-                for view: SUITabbedView<SelectionValue, Content>,
+                for view: SUITabView<SelectionValue, Content>,
                 in context: TreeStateContext
        ) -> HTMLTreeNode
   {
-    typealias TraitValues = TabbedViewTraitValues<SelectionValue>
+    typealias TraitValues = TabViewTraitValues<SelectionValue>
     
     let currentSelection = view.selection.wrappedValue
     
@@ -79,7 +79,7 @@ extension HTMLTreeBuilder {
   func buildTabItems<SelectionValue: Hashable>(
          for childNodes   : [ HTMLTreeNode ],
          currentSelection : SelectionValue,
-         traits           : [ ElementID : TabbedViewTraitValues<SelectionValue> ],
+         traits           : [ ElementID : TabViewTraitValues<SelectionValue> ],
          in       context : TreeStateContext
        ) -> TypedCompoundNode<SUITabItemNode>
   {
