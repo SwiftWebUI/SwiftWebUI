@@ -23,8 +23,8 @@ public struct State<Value>: BindingConvertible, _StateType {
   var _slot  : StateHolder.StateEntryPointer = nil
   var _value : Value // FIXME
   
-  public init(initialValue: Value) {
-    self._value = initialValue
+  public init(wrappedValue: Value) {
+    self._value = wrappedValue
   }
   
   public var wrappedValue : Value {
@@ -45,14 +45,7 @@ public struct State<Value>: BindingConvertible, _StateType {
     }
   }
   
-  #if os(Linux)
-    public var projectedValue: Binding<Value> {
-      // This exposes the "$state" property as a `Binding<Value>` instead of
-      // `State<Value>`.
-      return binding
-    }
-  #endif
-  public var wrapperValue: Binding<Value> {
+  public var projectedValue: Binding<Value> {
     // This exposes the "$state" property as a `Binding<Value>` instead of
     // `State<Value>`.
     return binding
@@ -95,6 +88,6 @@ public struct State<Value>: BindingConvertible, _StateType {
 
 public extension State where Value : ExpressibleByNilLiteral {
   
-  init() { self.init(initialValue: nil) }
+  init() { self.init(wrappedValue: nil) }
   
 }
