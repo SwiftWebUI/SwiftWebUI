@@ -1,5 +1,5 @@
 //
-//  BindableObject.swift
+//  ObservableObject.swift
 //  SwiftWebUI
 //
 //  Created by Helge Heß on 06.06.19.
@@ -13,7 +13,7 @@
   import OpenCombine
 #endif
 
-public protocol BindableObject: AnyObject, DynamicViewProperty, Identifiable {
+public protocol ObservableObject: AnyObject, DynamicViewProperty, Identifiable {
   
   associatedtype PublisherType : Publisher
                    where Self.PublisherType.Failure == Never
@@ -22,7 +22,7 @@ public protocol BindableObject: AnyObject, DynamicViewProperty, Identifiable {
 
 }
 
-public extension BindableObject {
+public extension ObservableObject {
   
   subscript<T>(keyPath: ReferenceWritableKeyPath<Self, T>) -> Binding<T> {
     return Binding(getValue: { return self[keyPath: keyPath] },

@@ -118,7 +118,7 @@ final class SubscriptionNode<P: Publisher>: HTMLWrappingNode
 }
 
 #if DEBUG && false
-fileprivate class MyStoreSubView: BindableObject {
+fileprivate class MyStoreSubView: ObservableObject {
   static let global = MyStoreSubView()
   var didChange = PassthroughSubject<Void, Never>()
   var i = 5 { didSet { didChange.send(()) } }

@@ -55,7 +55,7 @@ enum TimeZoneEnvironmentKey: EnvironmentKey {
   static var defaultValue: TimeZone { return .current }
 }
 
-enum EnvironmentObjectKey<O: BindableObject>: EnvironmentKey {
+enum EnvironmentObjectKey<O: ObservableObject>: EnvironmentKey {
   static var defaultValue: O? { return nil }
 }
 

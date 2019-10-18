@@ -13,7 +13,7 @@
 #endif
 
 @propertyWrapper
-public struct ObjectBinding<O: BindableObject>: _StateType {
+public struct ObjectBinding<O: ObservableObject>: _StateType {
 
   var _slot : StateHolder.StateEntryPointer = nil
   private var _value: O
@@ -99,7 +99,7 @@ public struct ObjectBinding<O: BindableObject>: _StateType {
 }
 
 #if DEBUG && false
-fileprivate class MyStore: BindableObject {
+fileprivate class MyStore: ObservableObject {
   static let global = MyStore()
   var didChange = PassthroughSubject<Void, Never>()
   var i = 5 { didSet { didChange.send(()) } }
