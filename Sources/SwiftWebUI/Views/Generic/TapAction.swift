@@ -8,10 +8,10 @@
 
 public extension View {
   
-  func tapAction(count: Int = 1, _ action: @escaping () -> Void)
+  func onTapGesture(count: Int = 1, _ action: @escaping () -> Void)
        -> TapActionView<Self>
   {
-    assert(count < 2, "only supporting dbl-click")
+    assert(count < 2, "only supporting single-click")
     return TapActionView(count: count, action: action, content: self)
   }
 
