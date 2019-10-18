@@ -13,7 +13,7 @@
 #endif
 
 @propertyWrapper
-public struct EnvironmentObject<O: BindableObject>: _StateType {
+public struct EnvironmentObject<O: ObservableObject>: _StateType {
   // TODO: This is pretty much a copy of the @BindableObject with only minor
   //       differences.
   

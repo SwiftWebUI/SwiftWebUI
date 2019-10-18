@@ -12,7 +12,7 @@
   import OpenCombine
 #endif
 
-final class NavigationContext: BindableObject {
+final class NavigationContext: ObservableObject {
   
   private(set) var activeTargetView : AnyView {
     didSet { didChange.send(()) }

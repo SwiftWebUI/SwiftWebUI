@@ -1,5 +1,5 @@
 //
-//  ObjectBinding.swift
+//  ObservedObject.swift
 //  SwiftWebUI
 //
 //  Created by Helge Heß on 20.06.19.
@@ -13,7 +13,7 @@
 #endif
 
 @propertyWrapper
-public struct ObjectBinding<O: BindableObject>: _StateType {
+public struct ObservedObject<O: ObservableObject>: _StateType {
 
   var _slot : StateHolder.StateEntryPointer = nil
   private var _value: O
@@ -99,13 +99,13 @@ public struct ObjectBinding<O: BindableObject>: _StateType {
 }
 
 #if DEBUG && false
-fileprivate class MyStore: BindableObject {
+fileprivate class MyStore: ObservableObject {
   static let global = MyStore()
   var didChange = PassthroughSubject<Void, Never>()
   var i = 5 { didSet { didChange.send(()) } }
 }
 fileprivate struct MyView : View {
-  @ObjectBinding var store = MyStore.global
+  @ObservedObject var store = MyStore.global
   var body: some View {
     Text("Blub \(store.i)")
   }

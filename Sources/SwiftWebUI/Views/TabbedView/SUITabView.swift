@@ -6,9 +6,9 @@
 //  Copyright © 2019 Helge Heß. All rights reserved.
 //
 
-public typealias TabbedView = SUITabbedView
+public typealias TabView = SUITabView
 
-public struct SUITabbedView<SelectionValue: Hashable, Content: View>: View {
+public struct SUITabView<SelectionValue: Hashable, Content: View>: View {
   // TODO: this could have two modes, one which re-renders on switch and one
   //       which always pregenerates all tab content.
   //       plus: one which loads on demand ;-)
@@ -26,7 +26,7 @@ public struct SUITabbedView<SelectionValue: Hashable, Content: View>: View {
   public var body: some View { return content }
 }
 
-extension TabbedView where SelectionValue == Int {
+extension TabView where SelectionValue == Int {
   
   public init(@ViewBuilder content: () -> Content) {
     // The default if no selection binding is provided
@@ -38,7 +38,7 @@ extension TabbedView where SelectionValue == Int {
   
 }
 
-extension SUITabbedView: TreeBuildingView {
+extension SUITabView: TreeBuildingView {
   func buildTree(in context: TreeStateContext) -> HTMLTreeNode {
     return context.currentBuilder.buildTree(for: self, in: context)
   }

@@ -24,7 +24,7 @@
 
 
 
-extension BindableObject { // can't extend AnyObject ...
+extension ObservableObject { // can't extend AnyObject ...
   
   var pointerDescription: String {
     return ObjectIdentifier(self).shortRawPointerString

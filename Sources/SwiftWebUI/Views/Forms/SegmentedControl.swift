@@ -34,7 +34,7 @@ public struct SegmentedControl<SelectionValue: Hashable, Content: View>: View {
 }
 
 public extension SegmentedControl {
-  func tapAction(_ action: @escaping () -> Void) -> Self {
+  func onTapGesture(_ action: @escaping () -> Void) -> Self {
     assert(self.action == nil, "Attempt to override tap action!")
     return SegmentedControl(selection: selection, action: action,
                             content: content)

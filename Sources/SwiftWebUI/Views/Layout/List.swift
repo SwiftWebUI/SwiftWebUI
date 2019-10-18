@@ -62,7 +62,7 @@ public extension List where Selection == Never {
         HStack(alignment: .center, spacing: nil) {
           rowContent(value)
         }
-        .tapAction { action(value) }
+        .onTapGesture { action(value) }
       )
     }
   }
@@ -108,9 +108,9 @@ public extension List {
         HStack(alignment: .center, spacing: nil) {
           rowContent(value.identifiedValue)
         }
-        .tapAction { action(value.identifiedValue) }
+        .onTapGesture { action(value.identifiedValue) }
           // this conflicts w/ the selection
-        .tag(value.id) // doesn't work in front of tapAction?!
+        .tag(value.id) // doesn't work in front of onTapGesture?!
       )
     }
   }

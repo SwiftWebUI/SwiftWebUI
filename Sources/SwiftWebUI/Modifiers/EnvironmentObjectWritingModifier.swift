@@ -8,14 +8,14 @@
 
 public extension View {
 
-  func environmentObject<O: BindableObject>(_ object: O)
+  func environmentObject<O: ObservableObject>(_ object: O)
        -> Self.Modified<EnvironmentObjectWritingModifier<O>>
   {
     return modifier(EnvironmentObjectWritingModifier(object))
   }
 }
 
-public struct EnvironmentObjectWritingModifier<O: BindableObject>
+public struct EnvironmentObjectWritingModifier<O: ObservableObject>
               : ViewModifier
 {
   private let object : O

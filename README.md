@@ -49,7 +49,7 @@ struct MainPage: View {
         .padding(.all)
         .background(.green, cornerRadius: 12)
         .foregroundColor(.white)
-        .tapAction(self.countUp)
+        .onTapGesture(self.countUp)
     }
   }
 }
