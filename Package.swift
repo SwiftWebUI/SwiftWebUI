@@ -42,7 +42,7 @@ enum CombineImplementation {
     #if canImport(Combine)
     return .combine
     #else
-    return .combineX
+    return .openCombine
     #endif
   }
 
