@@ -6,7 +6,13 @@
 //  Copyright © 2019 Helge Heß. All rights reserved.
 //
 
-import CXShim
+#if USE_COMBINE
+import Combine
+#elseif USE_COMBINEX
+import CombineX
+#elseif USE_OPEN_COMBINE
+import OpenCombine
+#endif
 
 public extension View {
   
