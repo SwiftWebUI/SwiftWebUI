@@ -6,7 +6,7 @@
 //  Copyright © 2019 Helge Heß. All rights reserved.
 //
 
-#if !canImport(CXShim)
+#if !USE_COMBINE && !USE_COMBINEX && !USE_OPEN_COMBINE
 
 // TODO: This needs more work. Just the basics to get synchronous event emitters
 //       working w/o Combine.
@@ -126,4 +126,4 @@ public extension Publisher {
   }
 }
 
-#endif // !canImport(CXShim)
+#endif // !USE_COMBINE && !USE_COMBINEX && !USE_OPEN_COMBINE
