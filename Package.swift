@@ -6,10 +6,6 @@ let package = Package(
   
   name: "SwiftWebUI",
   
-  platforms: [
-    .macOS(.v10_15), .iOS(.v13)
-  ],
-  
   products: [
     .library   (name: "SwiftWebUI", targets: [ "SwiftWebUI" ]),
     .executable(name: "HolyCow",    targets: [ "HolyCow"    ])
@@ -35,3 +31,36 @@ let package = Package(
     .target(name: "HolyCow", dependencies: [ "SwiftWebUI" ])
   ]
 )
+
+enum CombineImplementation {
+
+  case combine, combineX, openCombine
+
+  static var `default`: CombineImplementation {
+    #if canImport(Combine)
+    return .combine
+    #else
+    return .combineX
+    #endif
+  }
+
+  init?(_ description: String) {
+    let desc = description.lowercased().filter { $0.isLetter }
+    switch desc {
+    case "combine":     self = .combine
+    case "combinex":    self = .combineX
+    case "opencombine": self = .openCombine
+    default:            return nil
+    }
+  }
+}
+
+import Foundation
+
+let env = ProcessInfo.processInfo.environment
+let implkey = "CX_COMBINE_IMPLEMENTATION"
+let combineImpl = env[implkey].flatMap(CombineImplementation.init) ?? .default
+
+if combineImpl == .combine {
+  package.platforms = [.macOS(.v10_15), .iOS(.v13)]
+}
