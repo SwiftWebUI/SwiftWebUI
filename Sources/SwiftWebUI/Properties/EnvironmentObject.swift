@@ -6,11 +6,7 @@
 //  Copyright © 2019 Helge Heß. All rights reserved.
 //
 
-#if canImport(Combine)
-  import Combine
-#elseif canImport(OpenCombine)
-  import OpenCombine
-#endif
+import CXShim
 
 @propertyWrapper
 public struct EnvironmentObject<O: ObservableObject>: _StateType {

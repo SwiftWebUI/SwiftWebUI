@@ -2,17 +2,6 @@
 
 import PackageDescription
 
-#if canImport(Combine)
-  let extraPackages     : [ PackageDescription.Package.Dependency ] = []
-  let extraDependencies : [ Target.Dependency ] = []
-#else
-  let extraPackages     : [ PackageDescription.Package.Dependency ] = [
-    .package(url: "https://github.com/broadwaylamb/OpenCombine.git",
-             from: "0.5.0")
-  ]
-  let extraDependencies : [ Target.Dependency ] = [ "OpenCombine" ]
-#endif
-
 let package = Package(
   
   name: "SwiftWebUI",
@@ -32,15 +21,17 @@ let package = Package(
     .package(url: "https://github.com/SwiftWebResources/SemanticUI-Swift.git",
              from: "2.3.4"),
     .package(url: "https://github.com/wickwirew/Runtime.git",
-             from: "2.1.1")
-  ] + extraPackages,
+             from: "2.1.1"),
+    .package(url: "https://github.com/cx-org/CombineX.git",
+             from: "0.1.0")
+  ],
   
   targets: [
     .target(name: "SwiftWebUI",
             dependencies: [ 
                 "NIO", "NIOHTTP1", "NIOConcurrencyHelpers", 
-                "Runtime", "SemanticUI" 
-            ] + extraDependencies),
+                "Runtime", "SemanticUI", "CXShim"
+            ]),
     .target(name: "HolyCow", dependencies: [ "SwiftWebUI" ])
   ]
 )

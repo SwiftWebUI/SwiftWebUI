@@ -6,11 +6,7 @@
 //  Copyright © 2019 Helge Heß. All rights reserved.
 //
 
-#if canImport(Combine)
-  import Combine
-#elseif canImport(OpenCombine)
-  import OpenCombine
-#endif
+import CXShim
 
 final class NavigationContext: ObservableObject {
   

@@ -7,11 +7,7 @@
 //
 
 // FIXME: Combine requires 10.15, maybe provide a simple alternative
-#if canImport(Combine)
-  import Combine
-#elseif canImport(OpenCombine)
-  import OpenCombine
-#endif
+import CXShim
 
 public protocol ObservableObject: AnyObject, DynamicViewProperty, Identifiable {
   

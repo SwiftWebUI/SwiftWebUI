@@ -6,8 +6,7 @@
 //  Copyright © 2019 Helge Heß. All rights reserved.
 //
 
-#if canImport(Combine)
-import Combine
+import CXShim
 
 public extension View {
   
@@ -131,5 +130,3 @@ fileprivate struct MySubView : View {
   }
 }
 #endif
-
-#endif // canImport(Combine)
