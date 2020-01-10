@@ -18,7 +18,7 @@ public protocol ObservableObject: AnyObject, DynamicViewProperty, Identifiable {
   associatedtype PublisherType : Publisher
                    where Self.PublisherType.Failure == Never
   
-  var didChange: Self.PublisherType { get }
+  var willChange: Self.PublisherType { get }
 
 }
 

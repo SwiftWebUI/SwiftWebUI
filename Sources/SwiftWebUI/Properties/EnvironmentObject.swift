@@ -44,7 +44,7 @@ public struct EnvironmentObject<O: ObservableObject>: _StateType {
 
       let elementID = slot.pointee.holder.id
       let context   = slot.pointee.holder.context
-      let subscription = newValue.didChange.sink {
+      let subscription = newValue.willChange.sink {
         [unowned context] _ in
         context.invalidateComponentWithID(elementID)
       }
@@ -93,7 +93,7 @@ public struct EnvironmentObject<O: ObservableObject>: _StateType {
       fatalError("missing environment object in environment! \(O.self)")
     }
     
-    let subscription = initialValue.didChange.sink {
+    let subscription = initialValue.willChange.sink {
       [unowned context] _ in // Fishy, maybe ordering sensitive? Rather weak it?
       context.invalidateComponentWithID(elementID)
     }

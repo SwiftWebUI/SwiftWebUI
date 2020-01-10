@@ -15,7 +15,7 @@
 final class NavigationContext: ObservableObject {
   
   private(set) var activeTargetView : AnyView {
-    didSet { didChange.send(()) }
+    willSet { willChange.send(()) }
   }
   
   init(_ initialTargetView: AnyView) {
@@ -32,7 +32,7 @@ final class NavigationContext: ObservableObject {
     activeTargetView = view
   }
 
-  var didChange = PassthroughSubject<Void, Never>()
+  var willChange = PassthroughSubject<Void, Never>()
 }
 
 extension NavigationContext: CustomStringConvertible {
