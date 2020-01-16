@@ -11,6 +11,35 @@
 
 let SwiftWebUIJavaScript =
 """
+let socket = new WebSocket(`ws://${window.location.hostname}:${window.location.port}/websocket`);
+
+socket.onopen = function(e) {
+  console.log("WebSocket: Connection established");
+};
+
+socket.onmessage = function(event) {
+  console.log("WebSocket onmessage", event.data);
+    if(typeof event.data === String) {
+        let json = JSON.parse(event.data);
+        console.log(`WebSocket: recived data: ${json}`);
+        SwiftUI.handleJSON(json)
+    }
+};
+
+socket.onclose = function(event) {
+  if (event.wasClean) {
+    console.log("WebSocket: Connection closed cleanly, code=${event.code} reason=${event.reason}");
+  } else {
+    // e.g. server process killed or network down
+    // event.code is usually 1006 in this case
+    console.log("WebSocket: Connection died");
+  }
+};
+
+socket.onerror = function(error) {
+  console.log("WebSocket: onerror", error.message);
+};
+
 SwiftUI.handleJSON = function(json) {
   if (json.changes !== undefined) {
     for (var i = 0; i < json.changes.length; i++) {
@@ -88,20 +117,8 @@ SwiftUI.handleJSON = function(json) {
 }
 
 SwiftUI.sendEvent = function(type, elementID, value) {
-  // TODO: convert to send stuff as JSON in body ...
-  const self = this;
-  var url = self.gatewayURL + "&eid=" + elementID + "&event=" + type;
-  if (value !== undefined) {
-    url += "&value=" + encodeURIComponent(value);
-  }
-  console.log("URL:", url);
-  
-  fetch(url, { method: "POST", cache: "no-cache" })
-    .then(response => response.json())
-    .then(self.handleJSON)
-    .catch(function(error) {
-      alert("Ooops, failed?!\\n" + error);
-    })
+  var obj = { wocid: "1", wosid: SwiftUI.sessionID, eid: elementID, event: type, value: value };
+  socket.send(JSON.stringify(obj));
 };
 
 SwiftUI.valueCommit = function(element) {

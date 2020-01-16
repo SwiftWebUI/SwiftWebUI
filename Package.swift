@@ -38,7 +38,7 @@ let package = Package(
   targets: [
     .target(name: "SwiftWebUI",
             dependencies: [ 
-                "NIO", "NIOHTTP1", "NIOConcurrencyHelpers", 
+                "NIO", "NIOHTTP1", "NIOWebSocket", "NIOConcurrencyHelpers", 
                 "Runtime", "SemanticUI" 
             ] + extraDependencies),
     .target(name: "HolyCow", dependencies: [ "SwiftWebUI" ])

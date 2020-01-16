@@ -91,7 +91,7 @@ public struct ObservedObject<O: ObservableObject>: _StateType {
     let typedPtr = location.assumingMemoryBound(to: Self.self)
     let subscription = typedPtr.pointee._value.willChange.sink {
       [unowned context] _ in // Fishy, maybe ordering sensitive? Rather weak it?
-      context.invalidateComponentWithID(elementID)
+        context.invalidateComponentWithID(elementID)
     }
     return StateValueBox(value: typedPtr.pointee._value,
                          subscription: AnyCancellable(subscription))
@@ -101,8 +101,8 @@ public struct ObservedObject<O: ObservableObject>: _StateType {
 #if DEBUG && false
 fileprivate class MyStore: ObservableObject {
   static let global = MyStore()
-  var didChange = PassthroughSubject<Void, Never>()
-  var i = 5 { didSet { didChange.send(()) } }
+  var willChange = PassthroughSubject<Void, Never>()
+  var i = 5 { willSet { willChange.send(()) } }
 }
 fileprivate struct MyView : View {
   @ObservedObject var store = MyStore.global

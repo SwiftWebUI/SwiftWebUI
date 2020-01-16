@@ -94,8 +94,8 @@ public struct EnvironmentObject<O: ObservableObject>: _StateType {
     }
     
     let subscription = initialValue.willChange.sink {
-      [unowned context] _ in // Fishy, maybe ordering sensitive? Rather weak it?
-      context.invalidateComponentWithID(elementID)
+        [unowned context] _ in // Fishy, maybe ordering sensitive? Rather weak it?
+        context.invalidateComponentWithID(elementID)
     }
     return StateValueBox(value: initialValue,
                          subscription: AnyCancellable(subscription))
