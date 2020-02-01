@@ -3,7 +3,7 @@
 //  SwiftWebUI
 //
 //  Created by Helge Heß on 13.06.19.
-//  Copyright © 2019 Helge Heß. All rights reserved.
+//  Copyright © 2019-2020 Helge Heß. All rights reserved.
 //
 
 fileprivate let rootElementIDComponent    = "/"
@@ -131,14 +131,15 @@ extension AnyHashable: WebRepresentableIdentifier {
 }
 
 
-import class NIOConcurrencyHelpers.Atomic
+import class NIOConcurrencyHelpers.NIOAtomic
 
 // A super lame workaround to deal with arbitrary hash values. Its size is
 // unbounded ;-)
 // OKayish for testing, but warn the user to use `WebRepresentableIdentifier`s.
 fileprivate var elementIDComponentToWebID = [ AnyHashable: String ]()
   // TODO: make threadsafe
-fileprivate var xIDSequence = Atomic(value: Int.random(in: 0...31011973))
+fileprivate var xIDSequence =
+                  NIOAtomic.makeAtomic(value: Int.random(in: 0...31011973))
 fileprivate let xIDPrefix   = "X"
 
 extension ElementID { // WebID
