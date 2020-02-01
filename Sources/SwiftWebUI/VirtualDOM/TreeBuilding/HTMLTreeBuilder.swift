@@ -3,58 +3,28 @@
 //  SwiftWebUI
 //
 //  Created by Helge Heß on 06.06.19.
-//  Copyright © 2019 Helge Heß. All rights reserved.
+//  Copyright © 2019-2020 Helge Heß. All rights reserved.
 //
 
-#if true
 protocol TreeBuildingView {
-  // FIXME: I'd like to drop this, but I'm not sure the compiler actually
-  //        dispatches the way I want statically.
-  
+  // TBD: I'd like to drop this. But I don't think it is possible.
   func buildTree(in context: TreeStateContext) -> HTMLTreeNode
-  
 }
-
-#if false
-  // The compiler does NOT expand this to the proper type specific buildTree,
-  // but just fills in the protocol slot to this sole version which just takes
-  // the TreeBuildingView again
-extension TreeBuildingView {
-  func buildTree(in context: TreeStateContext) -> HTMLTreeNode {
-    context.currentBuilder.buildTree(for: self, in: context)
-  }
-}
-#endif
-#else
-protocol TreeBuildingView: View {
-  func buildTree(in context: TreeStateContext) -> HTMLTreeNode
-  
-}
-#endif
 
 class HTMLTreeBuilder {
   
   static let `default` = HTMLTreeBuilder()
   
-  // FIXME: Drop static
-  // FIXME: Drop TreeBuildingView, that might actually drop the ambiguouity
-  //        and make the static dispatch work.
-  
   func buildTree<V: View>(for view: V, in context: TreeStateContext)
        -> HTMLTreeNode
   {
-    #if true // this should not be required but currently fails in AnyView
     if let treeBuildingView : TreeBuildingView = view as? TreeBuildingView {
-      #if false // ambiguous, somehow swiftc still considers the cast a View
-        return buildTree(for: treeBuildingView, in: context)
-      #else
-        return treeBuildingView.buildTree(in: context)
-      #endif
+      // Note: Cannot use the `buildTree<V: TreeBuildingView>` because
+      //       protocols do not conform to themselves.
+      return treeBuildingView.buildTree(in: context)
     }
-    #endif
 
-    guard case .dynamic = view.lookupTypeInfo() else {
-      // Static
+    guard case .dynamic = view.lookupTypeInfo() else { // Static
       return buildTree(for: view.body, in: context)
     }
     
