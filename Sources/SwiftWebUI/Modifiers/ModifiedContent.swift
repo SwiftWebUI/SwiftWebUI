@@ -46,9 +46,16 @@ extension ModifiedContent: TreeBuildingView
 
 public extension View {
   
-  typealias Modified<T: ViewModifier> = ModifiedContent<Self, T>
-  
-  func modifier<T>(_ modifier: T) -> Self.Modified<T> where T: ViewModifier {
+  @inlinable
+  func modifier<M>(_ modifier: M) -> ModifiedContent<Self, M> {
+    return ModifiedContent(content: self, modifier: modifier)
+  }
+}
+
+public extension ViewModifier {
+
+  @inlinable
+  func concat<M>(_ modifier: M) -> ModifiedContent<Self, M> {
     return ModifiedContent(content: self, modifier: modifier)
   }
 }
