@@ -3,14 +3,12 @@
 //  SwiftWebUI
 //
 //  Created by Helge Heß on 21.06.19.
-//  Copyright © 2019 Helge Heß. All rights reserved.
+//  Copyright © 2019-2020 Helge Heß. All rights reserved.
 //
 
 public extension View {
 
-  func environmentObject<O: ObservableObject>(_ object: O)
-       -> Self.Modified<EnvironmentObjectWritingModifier<O>>
-  {
+  func environmentObject<O: ObservableObject>(_ object: O) -> some View {
     return modifier(EnvironmentObjectWritingModifier(object))
   }
 }

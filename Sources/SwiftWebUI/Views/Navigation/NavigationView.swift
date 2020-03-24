@@ -3,7 +3,7 @@
 //  SwiftWebUI
 //
 //  Created by Helge Heß on 22.06.19.
-//  Copyright © 2019 Helge Heß. All rights reserved.
+//  Copyright © 2019-2020 Helge Heß. All rights reserved.
 //
 
 public struct NavigationView<Root: View>: View {
@@ -44,7 +44,7 @@ public extension View {
   func navigationBarTitle(_ item: Text,
                           displayMode : NavigationBarItem.TitleDisplayMode
                                       = .automatic)
-         -> Self.Modified<TraitWritingModifier<NavigationBarItem>>
+       -> some View
   {
     // TBD: we probably want a different trait just for the title
     let v = NavigationBarItem(view: AnyView(item), displayMode: displayMode)
