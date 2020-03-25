@@ -32,14 +32,18 @@ enum ComponentTypeInfo: Equatable {
     func mutablePointerIntoView<T: View>(_ view: inout T)
          -> UnsafeMutableRawPointer
     {
+      // TODO: Swift-5.2 (maybe before):
+      //       We probably should pass down actual pointers
       // Note: We do not really need the `T` here.
-      let viewPtr    = UnsafeMutablePointer(&view)
+      let viewPtr    = UnsafeMutablePointer(&view) // gives warning on 5.2
       let rawViewPtr = UnsafeMutableRawPointer(viewPtr)
       let rawPropPtr = rawViewPtr.advanced(by: offset)
       return rawPropPtr
     }
     
     func updateInView<T: View>(_ view: inout T) {
+      // TODO: Swift-5.2 (maybe before):
+      //       We probably should pass down actual pointers
       // Note: We do not really need the `T` here.
       let rawPropPtr = mutablePointerIntoView(&view)
       typeInstance._updateInstance(at: rawPropPtr)
