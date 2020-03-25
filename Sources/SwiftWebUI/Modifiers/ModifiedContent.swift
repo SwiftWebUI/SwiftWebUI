@@ -3,17 +3,24 @@
 //  SwiftWebUI
 //
 //  Created by Helge Heß on 09.06.19.
-//  Copyright © 2019 Helge Heß. All rights reserved.
+//  Copyright © 2019-2020 Helge Heß. All rights reserved.
 //
 
-public struct ModifiedContent<T: View, M: ViewModifier> : View {
-  // Our implementation is probably different to what SwiftUI really does.
-  // We just put special keys into the context when building the tree.
-
+public struct ModifiedContent<Content, Modifier> {
+  
+  public var content  : Content
+  public var modifier : Modifier
+  
+  @inlinable
+  init(content: Content, modifier: Modifier) {
+    self.content  = content
+    self.modifier = modifier
+  }
+}
+extension ModifiedContent: View
+            where Content: View, Modifier: ViewModifier
+{
   public typealias Body = Never
-
-  let content  : T
-  let modifier : M
 }
 
 extension HTMLTreeBuilder {
@@ -29,7 +36,9 @@ extension HTMLTreeBuilder {
     return node
   }
 }
-extension ModifiedContent: TreeBuildingView {
+extension ModifiedContent: TreeBuildingView
+            where Content: View, Modifier: ViewModifier
+{
   func buildTree(in context: TreeStateContext) -> HTMLTreeNode {
     context.currentBuilder.buildTree(for: self, in: context)
   }
@@ -37,9 +46,16 @@ extension ModifiedContent: TreeBuildingView {
 
 public extension View {
   
-  typealias Modified<T: ViewModifier> = ModifiedContent<Self, T>
-  
-  func modifier<T>(_ modifier: T) -> Self.Modified<T> where T: ViewModifier {
+  @inlinable
+  func modifier<M>(_ modifier: M) -> ModifiedContent<Self, M> {
+    return ModifiedContent(content: self, modifier: modifier)
+  }
+}
+
+public extension ViewModifier {
+
+  @inlinable
+  func concat<M>(_ modifier: M) -> ModifiedContent<Self, M> {
     return ModifiedContent(content: self, modifier: modifier)
   }
 }

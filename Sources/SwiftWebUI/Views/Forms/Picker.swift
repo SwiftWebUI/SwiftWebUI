@@ -133,7 +133,7 @@ extension View {
 
 public class AnyPickerStyle: PickerStyle {
   public typealias Label  = PickerStyleLabel
-  public typealias Member = StaticMember<Self>
+  public typealias Member = StaticMember<AnyPickerStyle>
 
   public func body<S: Hashable>(configuration: Configuration<S>) -> AnyView {
     fatalError("subclass responsibility: \(#function)")

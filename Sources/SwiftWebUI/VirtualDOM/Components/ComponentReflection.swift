@@ -32,14 +32,18 @@ enum ComponentTypeInfo: Equatable {
     func mutablePointerIntoView<T: View>(_ view: inout T)
          -> UnsafeMutableRawPointer
     {
+      // TODO: Swift-5.2 (maybe before):
+      //       We probably should pass down actual pointers
       // Note: We do not really need the `T` here.
-      let viewPtr    = UnsafeMutablePointer(&view)
+      let viewPtr    = UnsafeMutablePointer(&view) // gives warning on 5.2
       let rawViewPtr = UnsafeMutableRawPointer(viewPtr)
       let rawPropPtr = rawViewPtr.advanced(by: offset)
       return rawPropPtr
     }
     
     func updateInView<T: View>(_ view: inout T) {
+      // TODO: Swift-5.2 (maybe before):
+      //       We probably should pass down actual pointers
       // Note: We do not really need the `T` here.
       let rawPropPtr = mutablePointerIntoView(&view)
       typeInstance._updateInstance(at: rawPropPtr)
@@ -58,10 +62,19 @@ enum ComponentTypeInfo: Equatable {
   }
 }
 
-// FIXME: Those need to be locked or thread-local eventually. Works because
-//        we run single threaded ATM.
-fileprivate var componentTypeCache : [ ObjectIdentifier : ComponentTypeInfo ]
-                                   = [:]
+#if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+  import Darwin
+#else
+  import Glibc
+#endif
+
+fileprivate let lock : UnsafeMutablePointer<pthread_mutex_t> = {
+  let lock = UnsafeMutablePointer<pthread_mutex_t>.allocate(capacity: 1)
+  let err = pthread_mutex_init(lock, nil)
+  precondition(err == 0, "could not initialize lock")
+  return lock
+}()
+fileprivate var _componentTypeCache = [ ObjectIdentifier : ComponentTypeInfo ]()
 
 extension View {
   
@@ -69,10 +82,15 @@ extension View {
     // FIXME: static func ;-)
     let typeOID = ObjectIdentifier(type(of: self))
     
-    if let ti = componentTypeCache[typeOID] { return ti }
+    pthread_mutex_lock(lock)
+    let cachedData = _componentTypeCache[typeOID]
+    pthread_mutex_unlock(lock)
+    if let ti = cachedData { return ti }
     
     let newType = ComponentTypeInfo(reflecting: Self.self) ?? .static
-    componentTypeCache[typeOID] = newType
+    pthread_mutex_lock(lock)
+    _componentTypeCache[typeOID] = newType
+    pthread_mutex_unlock(lock)
     return newType
   }
   

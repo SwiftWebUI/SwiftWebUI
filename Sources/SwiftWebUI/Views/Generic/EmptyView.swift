@@ -7,9 +7,8 @@
 //
 
 public struct EmptyView : View {
-  
   public typealias Body = Never
-  
+  public init() {}
 }
 
 extension HTMLTreeBuilder {

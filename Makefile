@@ -6,7 +6,7 @@ SWIFT_CLEAN=swift package clean
 SWIFT_BUILD_DIR=.build
 
 # docker config
-SWIFT_BUILD_IMAGE="helje5/swift-dev:5.1.snap2019-07-01"
+SWIFT_BUILD_IMAGE="helje5/swift-dev:5.2.0"
 CONFIGURATION=release
 DOCKER_BUILD_DIR=".docker.build"
 SWIFT_DOCKER_BUILD_DIR="$(DOCKER_BUILD_DIR)/x86_64-unknown-linux/$(CONFIGURATION)"
@@ -37,7 +37,7 @@ $(DOCKER_BUILD_PRODUCT): $(SWIFT_SOURCES)
 docker-all: $(DOCKER_BUILD_PRODUCT)
 
 docker-clean:
-	rm $(DOCKER_BUILD_PRODUCT)	
+	rm -rf $(DOCKER_BUILD_PRODUCT)	
 	
 docker-distclean:
 	rm -rf $(DOCKER_BUILD_DIR)

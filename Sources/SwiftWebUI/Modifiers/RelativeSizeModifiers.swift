@@ -3,26 +3,24 @@
 //  SwiftWebUI
 //
 //  Created by Helge Heß on 17.06.19.
-//  Copyright © 2019 Helge Heß. All rights reserved.
+//  Copyright © 2019-2020 Helge Heß. All rights reserved.
 //
 
 public extension View {
 
-  func relativeWidth(_ proportion: Length)
-       -> Self.Modified<RelativeLayoutTraitsLayout>
-  {
+  func relativeWidth(_ proportion: Length) -> some View {
+    typealias M = RelativeLayoutTraitsLayout
     if case .pixels(let value) = proportion { // Hack to make it work w/ Int's
-      return modifier(.init(width: .percent(Float(value * 100))))
+      return modifier(M(width: .percent(Float(value * 100))))
     }
-    return modifier(.init(width: proportion))
+    return modifier(M(width: proportion))
   }
-  func relativeHeight(_ proportion: Length)
-       -> Self.Modified<RelativeLayoutTraitsLayout>
-  {
+  func relativeHeight(_ proportion: Length) -> some View {
+    typealias M = RelativeLayoutTraitsLayout
     if case .pixels(let value) = proportion { // Hack to make it work w/ Int's
-      return modifier(.init(height: .percent(Float(value * 100))))
+      return modifier(M(height: .percent(Float(value * 100))))
     }
-    return modifier(.init(height: proportion))
+    return modifier(M(height: proportion))
   }
 }
 

@@ -3,10 +3,10 @@
 //  SwiftWebUI
 //
 //  Created by Helge Heß on 17.06.19.
-//  Copyright © 2019 Helge Heß. All rights reserved.
+//  Copyright © 2019-2020 Helge Heß. All rights reserved.
 //
 
-public struct AnyView : View, CustomStringConvertible {
+public struct AnyView : View {
 
   public typealias Body = Never
   
@@ -25,6 +25,9 @@ public struct AnyView : View, CustomStringConvertible {
       context.currentBuilder.buildTree(for: view, in: context)
     }
   }
+}
+
+extension AnyView: CustomStringConvertible {
   
   public var description: String {
     #if DEBUG
