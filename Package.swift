@@ -28,7 +28,7 @@ let package = Package(
   
   dependencies: [
     .package(url: "https://github.com/apple/swift-nio.git",
-             from: "2.13.0"),
+             from: "2.17.0"),
     .package(url: "https://github.com/SwiftWebResources/SemanticUI-Swift.git",
              from: "2.3.4"),
     .package(url: "https://github.com/wickwirew/Runtime.git",
