@@ -13,6 +13,8 @@ matrix:
           dist: xenial
           env:  SWIFT_SNAPSHOT_NAME="https://swift.org/builds/swift-5.2-release/ubuntu1604/swift-5.2-RELEASE/swift-5.2-RELEASE-ubuntu16.04.tar.gz"
           sudo: required
+        - os:   osx
+          osx_image: xcode11.4
 
 before_install:
     - ./.travis.d/before-install.sh
