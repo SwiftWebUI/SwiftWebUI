@@ -3,23 +3,14 @@
 //  SwiftWebUI
 //
 //  Created by Helge Heß on 06.06.19.
-//  Copyright © 2019 Helge Heß. All rights reserved.
+//  Copyright © 2019-2020 Helge Heß. All rights reserved.
 //
 
 public protocol Identifiable {
   
   associatedtype ID: Hashable
-  associatedtype IdentifiedValue = Self
   
   var id : Self.ID { get }
-  
-  var identifiedValue: Self.IdentifiedValue { get }
-}
-
-public extension Identifiable where Self == Self.IdentifiedValue {
-  
-  var identifiedValue: Self.IdentifiedValue { return self }
-  
 }
 
 public extension Identifiable where Self: CaseIterable {

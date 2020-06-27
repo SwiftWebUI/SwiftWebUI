@@ -3,7 +3,7 @@
 //  SwiftWebUI
 //
 //  Created by Helge Heß on 23.06.19.
-//  Copyright © 2019 Helge Heß. All rights reserved.
+//  Copyright © 2019-2020 Helge Heß. All rights reserved.
 //
 public struct List<Selection: SelectionManager, Content: View>: View {
 
@@ -29,7 +29,7 @@ public extension List where Selection == Never {
   
   init<Data, RowContent>(_ data: Data,
                          @ViewBuilder rowContent:
-                         @escaping (Data.Element.IdentifiedValue) -> RowContent)
+                           @escaping ( Data.Element.ID ) -> RowContent)
     where Content == ForEach<Data, HStack<RowContent>>,
           Data         : RandomAccessCollection,
           Data.Element : Identifiable,
@@ -45,9 +45,8 @@ public extension List where Selection == Never {
   
   init<Data, RowContent>(
     _ data: Data,
-    action: @escaping (Data.Element.IdentifiedValue) -> Void,
-    @ViewBuilder rowContent:
-    @escaping (Data.Element.IdentifiedValue) -> RowContent
+    action: @escaping ( Data.Element.ID ) -> Void,
+    @ViewBuilder rowContent: @escaping ( Data.Element.ID ) -> RowContent
   )
     where Content == ForEach<Data, AnyView>,
           Data         : RandomAccessCollection,
@@ -73,7 +72,7 @@ public extension List {
   init<Data, RowContent>(_ data     : Data,
                          selection  : Binding<Selection>?,
                          @ViewBuilder rowContent:
-                         @escaping (Data.Element.IdentifiedValue) -> RowContent)
+                           @escaping ( Data.Element.ID ) -> RowContent)
     where Content == ForEach<Data, AnyView>,
           Data         : RandomAccessCollection,
           Data.Element : Identifiable,
@@ -83,7 +82,7 @@ public extension List {
     self.content = ForEach(data) { (value : Data.Element) in
       AnyView(
         HStack(alignment: .center, spacing: nil) {
-          rowContent(value.identifiedValue)
+          rowContent(value.id)
         }
         .tag(value.id)
       )
@@ -93,9 +92,8 @@ public extension List {
   init<Data, RowContent>(
     _ data     : Data,
     selection  : Binding<Selection>?,
-    action     : @escaping (Data.Element.IdentifiedValue) -> Void,
-    @ViewBuilder rowContent:
-    @escaping (Data.Element.IdentifiedValue) -> RowContent
+    action     : @escaping ( Data.Element.ID ) -> Void,
+    @ViewBuilder rowContent: @escaping ( Data.Element.ID ) -> RowContent
   ) where Content == ForEach<Data, AnyView>,
           Data         : RandomAccessCollection,
           Data.Element : Identifiable,
@@ -106,9 +104,9 @@ public extension List {
     self.content = ForEach(data) { (value : Data.Element) in
       AnyView(
         HStack(alignment: .center, spacing: nil) {
-          rowContent(value.identifiedValue)
+          rowContent(value.id)
         }
-        .onTapGesture { action(value.identifiedValue) }
+        .onTapGesture { action(value.id) }
           // this conflicts w/ the selection
         .tag(value.id) // doesn't work in front of onTapGesture?!
       )
