@@ -6,10 +6,12 @@
 //  Copyright © 2019 Helge Heß. All rights reserved.
 //
 
-#if canImport(Combine)
-  import Combine
-#elseif canImport(OpenCombine)
-  import OpenCombine
+#if USE_COMBINE
+import Combine
+#elseif USE_COMBINEX
+import CombineX
+#elseif USE_OPEN_COMBINE
+import OpenCombine
 #endif
 
 final class NavigationContext: ObservableObject {
