@@ -19,7 +19,6 @@ public struct ShadowModifier: ViewModifier {
         let child = context.currentBuilder.buildTree(for: view, in: context)
         context.deleteLastElementIDComponent()
         
-        return HTMLShadowNode(elementID: context.currentElementID,
-                              value: value, content: child)
+        return HTMLStylePatchingNode.patch(child, withStyles: [.boxShadow : value], andElementID: context.currentElementID)
       }
 }
