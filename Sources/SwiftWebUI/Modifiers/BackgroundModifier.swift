@@ -36,8 +36,20 @@ public struct BackgroundModifier: ViewModifier {
     let child = context.currentBuilder.buildTree(for: view, in: context)
     context.deleteLastElementIDComponent()
     
-    return HTMLBackgroundNode(elementID: context.currentElementID,
-                              value: value, content: child)
+    var styles: CSSStyles? {
+      switch ( value.color, value.cornerRadius ) {
+        case ( .some(let color), .some(let cornerRadius) ):
+          return [ .backgroundColor: color, .borderRadius: cornerRadius ]
+        case ( .some(let color), .none ):
+          return [ .backgroundColor: color ]
+        case ( .none, .some(let cornerRadius) ):
+          return [ .borderRadius: cornerRadius ]
+        case ( .none, .none ):
+          return nil
+      }
+    }
+    
+    return HTMLStylePatchingNode.patch(child, withStyles: styles ?? [:], andElementID: context.currentElementID)
   }
   
 }
