@@ -19,9 +19,7 @@
 
 public extension ViewBuilder {
   
-  static func buildIf<V: View>(_ content: V)  -> V  { return content }
-  //static func buildIf<V: View>(_ content: V?) -> V? { return content }
-    // This one still doesn't work!
+  static func buildIf<V: View>(_ content: V?) -> V? { return content }
   
   static func buildEither<T: View, F: View>(first: T)
               -> ConditionalContent<T, F>

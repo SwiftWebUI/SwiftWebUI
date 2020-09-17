@@ -128,6 +128,10 @@ extension ComponentTypeInfo {
       return nil
     }
     guard structInfo.kind == .struct else {
+      if structInfo.kind == .optional {
+        self = .static
+        return
+      }
       print("Only structs allowed as View:", viewType)
       assertionFailure("currently only supporting structs for Views")
       return nil

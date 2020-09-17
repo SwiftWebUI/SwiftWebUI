@@ -13,3 +13,10 @@ public protocol View {
   var body : Self.Body { get }
 
 }
+
+//support for optional Views, mainly for @ViewBuilder convenience
+extension Optional : View where Wrapped : View {
+    public var body: EmptyView {
+        EmptyView()
+    }
+}
