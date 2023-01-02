@@ -1,4 +1,4 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.5
 
 import PackageDescription
 
@@ -28,19 +28,24 @@ let package = Package(
   
   dependencies: [
     .package(url: "https://github.com/apple/swift-nio.git",
-             from: "2.17.0"),
+             from: "2.46.0"),
     .package(url: "https://github.com/SwiftWebResources/SemanticUI-Swift.git",
-             from: "2.3.4"),
+             from: "2.4.2"),
     .package(url: "https://github.com/wickwirew/Runtime.git",
-             from: "2.1.1")
+             from: "2.2.4")
   ] + extraPackages,
   
   targets: [
     .target(name: "SwiftWebUI",
             dependencies: [ 
-                "NIO", "NIOHTTP1", "NIOConcurrencyHelpers", 
-                "Runtime", "SemanticUI" 
-            ] + extraDependencies),
-    .target(name: "HolyCow", dependencies: [ "SwiftWebUI" ])
+              .product(name: "NIO",                   package: "swift-nio"),
+              .product(name: "NIOConcurrencyHelpers", package: "swift-nio"),
+              .product(name: "NIOHTTP1",              package: "swift-nio"),
+              .product(name: "SemanticUI", package: "SemanticUI-Swift"),
+              "Runtime"
+            ] + extraDependencies,
+            exclude: [ "Views/Shapes/README.md" ]
+    ),
+    .executableTarget(name: "HolyCow", dependencies: [ "SwiftWebUI" ])
   ]
 )
