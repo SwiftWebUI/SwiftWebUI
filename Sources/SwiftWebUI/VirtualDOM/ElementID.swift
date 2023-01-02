@@ -3,8 +3,10 @@
 //  SwiftWebUI
 //
 //  Created by Helge Heß on 13.06.19.
-//  Copyright © 2019-2020 Helge Heß. All rights reserved.
+//  Copyright © 2019-2022 Helge Heß. All rights reserved.
 //
+
+import Atomics
 
 fileprivate let rootElementIDComponent    = "/"
 fileprivate let contentElementIDComponent = "_"
@@ -139,7 +141,7 @@ import class NIOConcurrencyHelpers.NIOAtomic
 fileprivate var elementIDComponentToWebID = [ AnyHashable: String ]()
   // TODO: make threadsafe
 fileprivate var xIDSequence =
-                  NIOAtomic.makeAtomic(value: Int.random(in: 0...31011973))
+  Atomics.ManagedAtomic<Int>(Int.random(in: 0...31011973))
 fileprivate let xIDPrefix   = "X"
 
 extension ElementID { // WebID
@@ -166,7 +168,7 @@ extension ElementID { // WebID
   
   static func makeWebID(for id: AnyHashable) -> String {
     if let webID = elementIDComponentToWebID[id] { return webID }
-    let sv = xIDSequence.add(1)
+    let sv    = xIDSequence.wrappingIncrementThenLoad(ordering: .relaxed)
     let webID = xIDPrefix + String(sv, radix: 16, uppercase: true)
     elementIDComponentToWebID[id] = webID
     #if DEBUG && false
