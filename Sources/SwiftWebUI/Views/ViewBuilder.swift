@@ -6,7 +6,7 @@
 //  Copyright © 2019 Helge Heß. All rights reserved.
 //
 
-@_functionBuilder public struct ViewBuilder {
+@resultBuilder public struct ViewBuilder {
 
   public static func buildBlock() -> EmptyView {
     return EmptyView()
