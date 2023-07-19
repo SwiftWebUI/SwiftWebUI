@@ -7,7 +7,7 @@ import PackageDescription
   let extraDependencies : [ Target.Dependency ] = []
 #else
   let extraPackages     : [ PackageDescription.Package.Dependency ] = [
-    .package(url: "https://github.com/broadwaylamb/OpenCombine.git",
+    .package(url: "https://github.com/OpenCombine/OpenCombine.git",
              from: "0.5.0")
   ]
   let extraDependencies : [ Target.Dependency ] = [ "OpenCombine" ]
