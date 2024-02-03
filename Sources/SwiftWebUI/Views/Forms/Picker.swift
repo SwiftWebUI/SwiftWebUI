@@ -3,7 +3,7 @@
 //  SwiftWebUI
 //
 //  Created by Helge Heß on 26.06.19.
-//  Copyright © 2019 Helge Heß. All rights reserved.
+//  Copyright © 2019-2024 Helge Heß. All rights reserved.
 //
 
 public struct Picker<Label: View, SelectionValue: Hashable, Content: View>: View
@@ -145,7 +145,7 @@ final class AnyPickerStyleBox<S: PickerStyle>: AnyPickerStyle {
   
   init(_ style: S) { self.style = style }
 
-  override func body<S: Hashable>(configuration: Configuration<S>) -> AnyView {
+  override func body<CS: Hashable>(configuration: Configuration<CS>) -> AnyView {
     return AnyView(style.body(configuration: configuration))
   }
 }
