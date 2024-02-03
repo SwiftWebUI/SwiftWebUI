@@ -3,7 +3,7 @@
 //  SwiftWebUI
 //
 //  Created by Helge Heß on 23.06.19.
-//  Copyright © 2019-2020 Helge Heß. All rights reserved.
+//  Copyright © 2019-2024 Helge Heß. All rights reserved.
 //
 public struct List<Selection: SelectionManager, Content: View>: View {
 
@@ -29,7 +29,7 @@ public extension List where Selection == Never {
   
   init<Data, RowContent>(_ data: Data,
                          @ViewBuilder rowContent:
-                           @escaping ( Data.Element.ID ) -> RowContent)
+                           @escaping ( Data.Element ) -> RowContent)
     where Content == ForEach<Data, HStack<RowContent>>,
           Data         : RandomAccessCollection,
           Data.Element : Identifiable,
@@ -45,8 +45,8 @@ public extension List where Selection == Never {
   
   init<Data, RowContent>(
     _ data: Data,
-    action: @escaping ( Data.Element.ID ) -> Void,
-    @ViewBuilder rowContent: @escaping ( Data.Element.ID ) -> RowContent
+    action: @escaping ( Data.Element ) -> Void,
+    @ViewBuilder rowContent: @escaping ( Data.Element ) -> RowContent
   )
     where Content == ForEach<Data, AnyView>,
           Data         : RandomAccessCollection,

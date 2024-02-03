@@ -3,7 +3,7 @@
 //  SwiftWebUI
 //
 //  Created by Helge Heß on 11.06.19.
-//  Copyright © 2019-2020 Helge Heß. All rights reserved.
+//  Copyright © 2019-2024 Helge Heß. All rights reserved.
 //
 
 public struct ForEach<Data, Content: View> : DynamicViewContent
@@ -17,10 +17,7 @@ public struct ForEach<Data, Content: View> : DynamicViewContent
   
   let content : ( Data.Element ) -> Content
   
-  public init(_ data: Data, content: @escaping ( Data.Element.ID ) -> Content) {
-    self.init(data, content: { value in content(value.id) })
-  }
-  init(_ data: Data, content: @escaping ( Data.Element ) -> Content) {
+  public init(_ data: Data, content: @escaping ( Data.Element ) -> Content) {
     self.data    = data
     self.content = content
   }
