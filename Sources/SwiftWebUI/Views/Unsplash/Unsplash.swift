@@ -6,7 +6,9 @@
 //  Copyright © 2019-2024 Helge Heß. All rights reserved.
 //
 
-import CoreGraphics
+#if canImport(CoreGraphics)
+import CoreGraphics // required for init
+#endif
 
 extension Image {
   
