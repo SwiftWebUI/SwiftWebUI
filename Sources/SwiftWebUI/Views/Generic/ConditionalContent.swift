@@ -11,7 +11,7 @@ public struct ConditionalContent<TrueContent, FalseContent> : View
 {
   // When building, we only ever get one side, either True or False.
   // That means if the condition toggles, the full child tree won't
-  // match up anymore? (unless they have an indentical structure?)
+  // match up anymore? (unless they have an identical structure?)
   public typealias Body = Never
   
   enum Content {
