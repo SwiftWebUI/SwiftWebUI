@@ -6,7 +6,9 @@
 //  Copyright © 2019 Helge Heß. All rights reserved.
 //
 
-// TBD: What is a trait?
+// What is a trait? Chris:
+// "A trait is like a preference, it travels upwards to the container of a
+//  view". But not higher.
 // I think the difference to an environment key is that traits never change
 // ("dynamically").
 
