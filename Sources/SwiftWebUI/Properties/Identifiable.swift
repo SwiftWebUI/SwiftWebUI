@@ -6,9 +6,15 @@
 //  Copyright © 2019-2024 Helge Heß. All rights reserved.
 //
 
-extension Int: Identifiable {
-  public var id: Int { return self }
-}
+#if compiler(>=6.0)
+  extension Int: @retroactive Identifiable {
+    public var id: Int { return self }
+  }
+#else
+  extension Int: Identifiable {
+    public var id: Int { return self }
+  }
+#endif
 
 public struct IdentifierValuePair<ID: Hashable, Value>: Identifiable {
   

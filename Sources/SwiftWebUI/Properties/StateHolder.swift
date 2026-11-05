@@ -72,9 +72,10 @@ final class StateHolder: CustomStringConvertible {
     _ = holder.values!.initialize(from: props.compactMap { prop in
       guard let stateType = prop.stateInstance else { return nil }
       
-      let rawPropPtr = prop.mutablePointerIntoView(&view)
-      let value = stateType._initialValueBox(at: rawPropPtr, for: elementID,
-                                             in: context)
+      let value = prop.withMutablePointerIntoView(&view) { rawPropPtr in
+        stateType._initialValueBox(at: rawPropPtr, for: elementID,
+                                   in: context)
+      }
       
       let entry = StateEntry(holder: holder, value: value)
       return entry
@@ -112,9 +113,10 @@ final class StateHolder: CustomStringConvertible {
       
       let stateEntryPointer = values!.baseAddress!.advanced(by: currentState)
       
-      let rawPropPtr = prop.mutablePointerIntoView(&view)
-      let slotPtr = rawPropPtr.assumingMemoryBound(to: StateEntryPointer.self)
-      slotPtr.pointee = stateEntryPointer
+      prop.withMutablePointerIntoView(&view) { rawPropPtr in
+        let slotPtr = rawPropPtr.assumingMemoryBound(to: StateEntryPointer.self)
+        slotPtr.pointee = stateEntryPointer
+      }
 
       currentState += 1
     }
@@ -130,9 +132,10 @@ final class StateHolder: CustomStringConvertible {
       guard prop.stateInstance != nil else { continue }
       assert(currentState < values!.count)
       
-      let rawPropPtr = prop.mutablePointerIntoView(&view)
-      let slotPtr = rawPropPtr.assumingMemoryBound(to: StateEntryPointer.self)
-      slotPtr.pointee = nil
+      prop.withMutablePointerIntoView(&view) { rawPropPtr in
+        let slotPtr = rawPropPtr.assumingMemoryBound(to: StateEntryPointer.self)
+        slotPtr.pointee = nil
+      }
       
       currentState += 1
     }

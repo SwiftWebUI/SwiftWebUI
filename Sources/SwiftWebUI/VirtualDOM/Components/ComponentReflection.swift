@@ -29,46 +29,27 @@ enum ComponentTypeInfo: Equatable {
     let typeInstance  : _DynamicViewPropertyType.Type
     let stateInstance : _StateType.Type?
 
-    #if true
-      func mutablePointerIntoView<T: View>(_ view: inout T)
-           -> UnsafeMutableRawPointer
-      {
-        // TODO: Swift-5.2 (maybe before):
-        //       We probably should pass down actual pointers
-        // Note: We do not really need the `T` here.
-        let viewPtr    = UnsafeMutablePointer(&view) // gives warning on 5.2
+    /// Runs `execute` with a raw pointer to this property's storage inside
+    /// the given `view`. The pointer is only valid for the duration of the
+    /// closure (hence the closure based API, `UnsafeMutablePointer(&view)`
+    /// produces a dangling pointer).
+    /// Note: We do not really need the `T` here.
+    func withMutablePointerIntoView<T: View, R>
+           (_ view: inout T,
+            execute: ( UnsafeMutableRawPointer ) throws -> R) rethrows -> R
+    {
+      return try withUnsafeMutablePointer(to: &view) { viewPtr in
         let rawViewPtr = UnsafeMutableRawPointer(viewPtr)
         let rawPropPtr = rawViewPtr.advanced(by: offset)
-        return rawPropPtr
+        return try execute(rawPropPtr)
       }
-    
-      func updateInView<T: View>(_ view: inout T) {
-        // TODO: Swift-5.2 (maybe before):
-        //       We probably should pass down actual pointers
-        // Note: We do not really need the `T` here.
-        let rawPropPtr = mutablePointerIntoView(&view)
+    }
+
+    func updateInView<T: View>(_ view: inout T) {
+      withMutablePointerIntoView(&view) { rawPropPtr in
         typeInstance._updateInstance(at: rawPropPtr)
       }
-    #else // new version to be tested
-      func withMutablePointerIntoView<T: View>
-             (_ view: inout T, execute: ( UnsafeMutableRawPointer ) -> Void)
-      {
-        withUnsafeMutablePointer(to: &view) { viewPtr in
-          let rawViewPtr = UnsafeMutableRawPointer(viewPtr)
-          let rawPropPtr = rawViewPtr.advanced(by: offset)
-          execute(rawPropPtr)
-        }
-      }
-
-      func updateInView<T: View>(_ view: inout T) {
-        // TODO: Swift-5.2 (maybe before):
-        //       We probably should pass down actual pointers
-        // Note: We do not really need the `T` here.
-        withMutablePointerIntoView(&view) { rawPropPtr in
-          typeInstance._updateInstance(at: rawPropPtr, context: context)
-        }
-      }
-    #endif
+    }
     
     static func ==(lhs: DynamicPropertyInfo, rhs: DynamicPropertyInfo)
                 -> Bool
