@@ -32,15 +32,21 @@ SwiftUI.handleJSON = function(json) {
           else { console.error("Missing element for change:", change.id); }
           break;
 
-        case "insert-element":
+        case "insert-element": {
           const t = document.createElement("template");
           t.innerHTML = change.content;
           const r = t.content.cloneNode(true);
-          const pred = element
-                     ? element.nextSibling
-                     : element.parentNode.firstChild;
-          element.parentNode.insertBefore(r, pred);
+          if (element) { // insert after the element with `id`
+            element.parentNode.insertBefore(r, element.nextSibling);
+          }
+          else if (change.before !== undefined) {
+            const next = document.getElementById(change.before);
+            if (next) { next.parentNode.insertBefore(r, next); }
+            else { console.error("Missing anchor for insert:", change.before); }
+          }
+          else { console.error("No anchor for insert:", change.newID); }
           break;
+        }
 
         case "order-child":
           if (element) {

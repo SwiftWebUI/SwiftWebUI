@@ -66,7 +66,17 @@ struct ForEachNode<ID: Hashable> : HTMLTreeNode {
     print("\(indent)<ForEach/>")
   }
   
+  /// An empty `ForEach` renders a placeholder element, so that rows which
+  /// get added later have a sibling to anchor on (like `EmptyNode`).
+  private var isEmpty : Bool { return children.isEmpty }
+  
   func generateHTML(into html: inout String) {
+    if isEmpty {
+      html += "<div class=\"swiftui-empty\""
+      html.appendAttribute("id", elementID.webID)
+      html += "></div>"
+      return
+    }
     for content in children {
       content.generateHTML(into: &html)
     }
@@ -100,10 +110,59 @@ struct ForEachNode<ID: Hashable> : HTMLTreeNode {
     let newIDs     = Set(        ids.map { $0.id } )
     let sameIDs    = oldIDs.intersection(newIDs)
     
-    for deletedID in oldIDs.subtracting(newIDs) {
-      let eid = elementID.appendingElementIDComponent(deletedID)
+    // Note: The DOM element of a child is not necessarily the one with the
+    //       child's ID, e.g. `List` wraps rows into an item element. The
+    //       `elementID` of the child node is the outermost element.
+    //
+    // Inserts are emitted before deletes, so that a row of the old list can
+    // serve as the anchor even if it goes away. If the old list was empty,
+    // the placeholder is the anchor.
+    
+    if isEmpty && !oldNode.isEmpty { // all rows go away, placeholder comes in
+      var html = ""
+      generateHTML(into: &html)
+      changeset.append(
+        .insertElementWithHTML(webID: elementID.webID,
+                               at: .before(oldNode.children[0].elementID.webID),
+                               html: html)
+      )
+    }
+    
+    // Walk the new elements in order, so that a predecessor which is new
+    // itself has been inserted by the time it is used as the anchor.
+    for idx in ids.indices where !oldIDs.contains(ids[idx].id) {
+      var html = ""
+      children[idx].generateHTML(into: &html)
+      
+      let webID    = children[idx].elementID.webID
+      let position : HTMLChange.InsertPosition
+      if idx > ids.startIndex {
+        position = .after(children[idx - 1].elementID.webID)
+      }
+      else if let succIdx = ids.indices.dropFirst().first(where: {
+                              sameIDs.contains(ids[$0].id) })
+      {
+        position = .before(children[succIdx].elementID.webID)
+      }
+      else if let firstOld = oldNode.children.first { // all old rows go away
+        position = .before(firstOld.elementID.webID)
+      }
+      else { // the old list was empty, anchor on the placeholder
+        position = .before(elementID.webID)
+      }
+      changeset.append(
+        .insertElementWithHTML(webID: webID, at: position, html: html)
+      )
+    }
+    
+    if !isEmpty && oldNode.isEmpty { // placeholder goes away
+      changeset.append(.deleteElement(webID: elementID.webID))
+    }
+    
+    for idx in oldNode.ids.indices where !newIDs.contains(oldNode.ids[idx].id) {
+      let eid = elementID.appendingElementIDComponent(oldNode.ids[idx].id)
       context.nodeGotDeleted(eid)
-      changeset.append(.deleteElement(webID: eid.webID))
+      changeset.append(.deleteElement(webID: oldNode.children[idx].elementID.webID))
     }
     
     if !sameIDs.isEmpty {
@@ -112,37 +171,10 @@ struct ForEachNode<ID: Hashable> : HTMLTreeNode {
       if oldSame != newSame {
         // FIXME: better imp, e.g. consider orders which stay the same
         for i in 0..<ids.count {
-          let eid = elementID.appendingElementIDComponent(ids[i].0).webID
-          let afterEID = i > 0
-              ? elementID.appendingElementIDComponent(ids[i - 1].0).webID
-              : nil
-          changeset.append(.order(webID: eid, after: afterEID))
+          let afterEID = i > 0 ? children[i - 1].elementID.webID : nil
+          changeset.append(.order(webID: children[i].elementID.webID,
+                                  after: afterEID))
         }
-      }
-    }
-    
-    for newID in newIDs.subtracting(oldIDs) {
-      guard let idx = ids.firstIndex(where: { $0.id == newID }) else {
-        assertionFailure("missing ID ... ")
-        continue
-      }
-      
-      var html = ""
-      children[idx].generateHTML(into: &html)
-      
-      let eid = elementID.appendingElementIDComponent(newID)
-      if idx > ids.startIndex {
-        let predIdx = ids.index(before: idx)
-        let predID  = elementID.appendingElementIDComponent(ids[predIdx].1)
-        changeset.append(
-          .insertElementWithHTML(webID: eid.webID, after: predID.webID,
-                                 html: html)
-        )
-      }
-      else {
-        changeset.append(
-          .insertElementWithHTML(webID: eid.webID, after: nil, html: html)
-        )
       }
     }
   }
