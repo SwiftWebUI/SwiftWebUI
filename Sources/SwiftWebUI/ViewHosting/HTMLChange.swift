@@ -8,6 +8,12 @@
 
 public enum HTMLChange {
   
+  /// Where to insert a new element, relative to a sibling.
+  public enum InsertPosition {
+    case after (String)
+    case before(String)
+  }
+
   init(_ webID: String, toggleClass clazz: String, isEnabled: Bool) {
     if isEnabled { self = .addClass   (webID: webID, class: clazz) }
     else         { self = .removeClass(webID: webID, class: clazz) }
@@ -16,7 +22,8 @@ public enum HTMLChange {
   case replaceElementWithHTML        (webID: String, html: String)
   case replaceElementContentsWithHTML(webID: String, html: String)
   case deleteElement                 (webID: String)
-  case insertElementWithHTML         (webID: String, after: String?,
+  /// Insert a new element next to the given sibling.
+  case insertElementWithHTML         (webID: String, at: InsertPosition,
                                       html: String)
   case setAttribute                  (webID: String,
                                       attribute: String, value: String)
@@ -40,14 +47,15 @@ public enum HTMLChange {
       case .removeClass(let webID, let clazz):
         return [ "type": "remove-class", "id": webID, "content": clazz ]
 
-      case .insertElementWithHTML(let webID, let after, let html):
-        if let after = after {
-          return [ "type": "insert-element", "id": after, "newID": webID,
-                   "content": html ]
+      case .insertElementWithHTML(let webID, let position, let html):
+        var json : [ String : Any ] = [
+          "type": "insert-element", "newID": webID, "content": html
+        ]
+        switch position {
+          case .after (let siblingID): json["id"]     = siblingID
+          case .before(let siblingID): json["before"] = siblingID
         }
-        else {
-          return [ "type": "insert-element", "newID": webID, "content": html ]
-        }
+        return json
       
       case .order(let webID, let after):
         if let after = after {
