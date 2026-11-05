@@ -9,7 +9,13 @@
 import struct Foundation.URL
 import struct Foundation.URLComponents
 
-// https://source.unsplash.com
+/// Generates URLs for placeholder photos.
+///
+/// This used to target the Unsplash Source API (source.unsplash.com), which
+/// Unsplash shut down. It now targets Lorem Picsum (picsum.photos), which
+/// serves Unsplash photos. Picsum has no search, so the `terms` are used as
+/// a seed, which yields a stable photo per set of terms. `scope` and `time`
+/// are kept for API compatibility, but have no effect anymore.
 public struct UnsplashSource {
   
   public enum Scope {
@@ -53,20 +59,21 @@ public struct UnsplashSource {
   public var terms : [ String ]
   
   public var url: URL {
-    var pathComponents = scope.pathComponents + [ time.pathComponent ]
-    if let size = size { pathComponents.append(size.pathComponent) }
+    // https://picsum.photos/seed/{seed}/{width}/{height}
+    let size = self.size ?? Size()
+    var pathComponents = [ String ]()
+    if !terms.isEmpty {
+      let seed = terms.map { $0.lowercased() }.joined(separator: "-")
+      pathComponents += [ "seed", seed ]
+    }
+    pathComponents += [ String(size.width), String(size.height) ]
     
     var url = URLComponents()
     url.scheme = "https"
-    url.host   = "source.unsplash.com"
+    url.host   = "picsum.photos"
     url.path   = "/" + pathComponents.map {
       $0.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? $0
     }.joined(separator: "/")
-    
-    url.query = terms.map {
-      $0.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? $0
-    }.joined(separator: ",")
-
     return url.url!
   }
 }
